@@ -10,6 +10,7 @@ sphinx-iframes
 sphinx-proof
 teachbooks-sphinx-grasple
 sphinx-prime-applets
+TexSoup
 
 # Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe
