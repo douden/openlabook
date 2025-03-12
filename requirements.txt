@@ -7,6 +7,9 @@ sphinx-exercise
 sphinx-tudelft-theme
 teachbooks-sphinx-tippy
 sphinx-iframes
+sphinx-proof
+teachbooks-sphinx-grasple
+sphinx-prime-applets
 
 # Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe
