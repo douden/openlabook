@@ -11,6 +11,9 @@ html:
 
 sphinx:
   config:
+    numfig_secnum_depth: 2
+    html_static_path:
+    - _static
     html_js_files:
     - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
     thebe_config:
@@ -18,7 +21,7 @@ sphinx:
       exclude_patterns: ["**/_*.yml", "**/*.md", "**/*.ipynb"]
     html_theme_options:
       logo:
-        text: TU Delft GitHub OIT Template
+        text: Linear Algebra (private)
       repository_url: "https://github.com/douden/openlabook" #add your own repo URL here
       path_to_docs: "book"
       repository_branch: "main"
@@ -29,18 +32,72 @@ sphinx:
         thebe: true
     html_show_copyright: false
     html_last_updated_fmt: '%B %-d, %Y'
+    latex_elements:
+          preamble: |
+            \usepackage{chemmacros}
+            \newcommand{\vect}[1]{\overrightarrow{#1}}
+            \newcommand{\N}{\mathbb{N}}
+            \newcommand{\R}{\mathbb{R}}
+            \newcommand{\C}{\mathbb{C}}
+            \newcommand{\ip}{\mathbf{\cdot}}
+            \renewcommand{\iff}{\Longleftrightarrow}
+            \newcommand{\ce}{\ch}
+            \newcommand{\cp}{\times }
+            \newcommand{\norm}[1]{\left\Vert{#1}\right\Vert}
+            \newcommand{\abs}[1]{\left\vert{#1}\right\vert}
+            \renewcommand{\Span}[1]{\operatorname{Span}\left\lbrace#1\right\rbrace}
+            \newcommand{\Col}[1]{\ensuremath{{\rm Col\,}{#1}}}
+            \newcommand{\Nul}[1]{\ensuremath{{\rm Nul\,}{#1}}}
+            \newcommand{\Rank}[1]{\ensuremath{{\rm rank\,}{#1}}}
+            \newcommand{\Row}[1]{\ensuremath{{\rm Row\,}{#1}}}
+            \newcommand{\Det}[1]{\operatorname{det}\left(#1\right)}
+            \renewcommand{\det}[1]{\operatorname{det}\left(#1\right)}
+            \renewcommand{\Re}[1]{\operatorname{Re}\left(#1\right)}
+            \renewcommand{\Im}[1]{\operatorname{Im}\left(#1\right)}
+            \renewcommand{\proj}{\operatorname{proj} }
+            \newcommand{\nicefrac}{\frac }
+            \newcommand{\mc}{\mathcal}
+            \newcommand{\Arg}{\operatorname{Arg}}
+            \newcommand{\PB}{P_{\mathcal{B}}}
+            \newcommand{\CoBmatrix}[2]{P_{{\mathcal #2}\leftarrow{\mathcal #1}}}
+            \usepackage{tabularx}
+            \usepackage{threeparttable}
+    mathjax3_config: 
+      tex:
+        inlineMath: [ ['$','$'], ['\(','\)'] ]
+        displayMath: [ ['$$','$$'], ['\[','\]'] ]
+        macros:
+          "CoBmatrix": ["P_{{\\mathcal #2}\\leftarrow{\\mathcal #1}} ",2]
+          "mc": "\\mathcal"
+          "PB": "P_{\\mathcal B}"
+          "N": "\\mathbb{N}"
+          "C": "\\mathbb{C}"
+          "R": "\\mathbb{R}"
+          "ip" : "\\mathbf{\\cdot}"
+          "vect": ["\\mathbf{#1}",1]
+          "abs": ["\\left\\vert #1 \\right\\vert",1]
+          "norm": ["\\left\\Vert #1 \\right\\Vert",1]
+          "cp": ["\\times "]
+          "Nul": ["{\\rm Nul}\\, #1", 1]
+          "Col": ["{\\rm Col}\\, #1", 1]
+          "Row": ["{\\rm Row}\\, #1", 1]
+          "Rank": ["{\\rm rank}\\, #1", 1]
+          "nicefrac": ["\\frac "]
+          "proj": ["\\operatorname{proj} "]
+          "Span": ["\\operatorname{Span}\\left\\lbrace #1 \\right\\rbrace",1]
+          "Det": ["\\operatorname{det}\\left(#1\\right)",1]
+          "Re": ["\\operatorname{Re}\\left(#1\\right)",1]
+          "Im": ["\\operatorname{Im}\\left(#1\\right)",1]
   extra_extensions:
-    - sphinx.ext.imgconverter
-    - jupyterbook_patches
-    - download_link_replacer
-    - sphinx.ext.extlinks
-    - sphinx_iframes
+    - sphinx_proof
+    - sphinx_togglebutton
     - sphinx_exercise
+    - teachbooks_sphinx_grasple
+    - sphinx.ext.imgconverter
     - sphinx_tudelft_theme
     - teachbooks_sphinx_tippy
-    - sphinx_proof
+    - jupyterbook_patches
     - sphinx_prime_applets
-    - teachbooks_sphinx_grasple
   local_extensions:
     latextable: _ext/
     latexlist: _ext/
