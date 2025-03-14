@@ -1,5 +1,12 @@
 # Introduction
 
+:::{tags} GROUP
+:hidden: False
+:badge: secondary
+
+Chapter1/Cross_product
+:::
+
 This book is suited for a standard linear algebra course for engineering students at a bachelor level. Except for some basic algebra skills generally taught in secondary education, no prior knowledge is expected.
 
 The main concepts of linear algebra are introduced from a geometrical perspective. We start by introducing the basic concepts of vectors, lines, and planes. There follows a thorough treatment of standard subjects like systems of linear equations, matrix arithmetic, eigenvalues and eigenvectors, orthogonality etc. In the final chapters, more advanced topics like symmetric matrices and discrete dynamical systems are discussed.

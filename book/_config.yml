@@ -98,7 +98,9 @@ sphinx:
     - teachbooks_sphinx_tippy
     - jupyterbook_patches
     - sphinx_prime_applets
+    - sphinx_design
   local_extensions:
     latextable: _ext/
     latexlist: _ext/
     parentheses_list: _ext/
+    ref_graph: _ext/
