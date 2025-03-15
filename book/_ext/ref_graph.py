@@ -2,7 +2,10 @@ from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 from docutils.parsers.rst import directives
 from docutils import nodes
-
+from docutils.parsers.rst import Parser
+from docutils.frontend import OptionParser
+from docutils.utils import new_document
+from docutils.nodes import NodeVisitor
 
 class TagsDirective(SphinxDirective):
     has_content = True
@@ -27,19 +30,23 @@ class TagsDirective(SphinxDirective):
         
         badge = self.options.get('badge')
         if badge is None:
-            badge = 'bdg-link-primary'
-        else:
-            badge = 'bdg-link-'+badge
+            badge = 'primary'
         
-        content = self.content
-        paragraphs = []
         if not hidden:
-            for line in content:
-                paragraphs.append(nodes.paragraph(rawsource=f'{{{badge}}}`{line}`'))
-        return paragraphs
+            content = self.content
+            for i,line in enumerate(content):
+                content[i] = f"{{bdg-ref-{badge}}}`{line}`"
+            self.content = content
+            value = self.parse_content_to_nodes()
+        else:
+            value = []
+
+        return value
         
 
 def setup(app: Sphinx):
+
+    app.setup_extension("sphinx_design")
 
     app.add_directive("tags", TagsDirective)
 

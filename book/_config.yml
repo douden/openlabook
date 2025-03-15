@@ -95,7 +95,7 @@ sphinx:
     - teachbooks_sphinx_grasple
     - sphinx.ext.imgconverter
     - sphinx_tudelft_theme
-    - teachbooks_sphinx_tippy
+    # - teachbooks_sphinx_tippy
     - jupyterbook_patches
     - sphinx_prime_applets
     - sphinx_design
