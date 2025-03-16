@@ -1,8 +1,6 @@
 # Introduction
 
 :::{tags} GROUP
-:hidden: False
-:badge: primary
 
 Sec:CrossProduct
 test <Sec:DotProduct>

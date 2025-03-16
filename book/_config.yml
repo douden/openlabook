@@ -11,6 +11,9 @@ html:
 
 sphinx:
   config:
+    ref_graph_default_hidden: False
+    # ref_graph_default_color: muted
+    # ref_graph_default_style: 
     numfig_secnum_depth: 2
     html_static_path:
     - _static
