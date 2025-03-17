@@ -1,11 +1,9 @@
-<!-- ---
-csp:
-  frame-ancestors: 'self' https://embed.grasple.com/;
----
- -->
 (Section:LinSystems)=
 
 # Systems of Linear Equations
+
+:::{tags} Equations
+:::
 
 (Subsec:LinSystems:Intro)=
 

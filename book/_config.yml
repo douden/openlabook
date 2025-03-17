@@ -11,9 +11,11 @@ html:
 
 sphinx:
   config:
-    ref_graph_default_hidden: False
-    # ref_graph_default_color: muted
-    # ref_graph_default_style: 
+    ref_graph_hidden: False
+    # ref_graph_group_file: "test.txt"
+    # ref_graph_color: muted
+    # ref_graph_style:
+    # ref_graph_color_map: {'Introduction':'darkgreen'}
     numfig_secnum_depth: 2
     html_static_path:
     - _static

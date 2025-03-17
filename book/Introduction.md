@@ -1,9 +1,6 @@
 # Introduction
 
-:::{tags} Introduction
-
-Sec:CrossProduct
-test <Sec:DotProduct>
+:::{refgraph}
 :::
 
 This book is suited for a standard linear algebra course for engineering students at a bachelor level. Except for some basic algebra skills generally taught in secondary education, no prior knowledge is expected.

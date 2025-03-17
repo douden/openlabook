@@ -2,10 +2,10 @@
 
 # Cross Product
 
-:::{tags} Chapter 1
+:::{tags} Vectors, Lines and Planes
 
-Lines in the Plane <SubSec:LinesAndPlanes:Plane>
-figure <Fig:LinesAndPlanes:LineInPlane>
+Sec:Vectors
+Sec:DotProduct
 :::
 
 In this section we will look at a specific operation on vectors in $\mathbb{R}^3$. This operation is called the _cross product_ and it allows us to construct a vector that is orthogonal to two given vectors. We will use this operation in
