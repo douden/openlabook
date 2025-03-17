@@ -3,6 +3,8 @@ from sphinx.util.docutils import SphinxDirective
 from docutils.parsers.rst import directives
 from docutils import nodes
 from sphinx_design.shared import SEMANTIC_COLORS
+from docutils.nodes import reference
+import os
 
 class TagsDirective(SphinxDirective):
     has_content = True
@@ -48,14 +50,13 @@ class TagsDirective(SphinxDirective):
                         content[i] = f"{{bdg-ref-{color}}}`{line}`"
                     else:
                         content[i] = f"{{bdg-ref-{color}-{style}}}`{line}`"
-                    if i==0:
-                        content[i] = "**Tags:** "+content[i]
             self.content = content
             value = self.parse_content_to_nodes()
         else:
             value = []
 
         tags_node = tags()
+        tags_node['group'] = self.arguments[0]
         tags_node.children = value
 
         # Add the node to all tags available
@@ -83,6 +84,9 @@ def setup(app: Sphinx):
     app.add_config_value('ref_graph_default_hidden',True,'env')
     app.add_config_value('ref_graph_default_color','primary','env')
     app.add_config_value("ref_graph_default_style",None,'env')
+    app.add_config_value("ref_graph_default_ref_file","references.txt",'env')
+    app.add_config_value("ref_graph_default_group_file","groups.txt",'env')
+
     app.setup_extension("sphinx_design")
 
     app.add_directive("tags", TagsDirective)
@@ -95,7 +99,7 @@ def setup(app: Sphinx):
     app.connect('env-purge-doc', purge_tags)
     app.connect('doctree-resolved', process_tags_nodes)
 
-    return
+    return {'parallel_write_safe': False}
 
 def purge_tags(app, env, docname):
     if not hasattr(env, 'ref_graph_all_tags'):
@@ -104,4 +108,52 @@ def purge_tags(app, env, docname):
 
 def process_tags_nodes(app, doctree, fromdocname):
     # Add here the collection of all tags and create the information for the graph 
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    print('!!! START PROCESS TAGS !!!')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    all_refs = []
+    unique_refs = set()
+    all_groups = []
+    unique_groups = set()
+
+    for node in doctree.traverse(tags):
+        for child in node.children:
+            # Should be a paragraph
+            for grandchild in child.children:
+                if isinstance(grandchild,reference):
+                    display_text = grandchild.children[0].rawsource.strip()
+                    target = grandchild.attributes['refuri'].strip()
+                    # change target to origin md file
+                    html = target.find(".html")
+                    target = target[:html]+".md"
+                    ref = (display_text,target)
+                    # prevent double references
+                    if ref not in unique_refs:
+                        unique_refs.add(ref)
+                        all_refs.append((f"{fromdocname}.md",*ref))
+        group = node.attributes['group']
+        group_entry = (f"{fromdocname}.md",group.strip())
+        if group_entry not in unique_groups:
+            unique_groups.add(group_entry)
+            all_groups.append(group_entry)
+
+    if len(all_refs)>0:
+        staticdir = os.path.join(app.builder.outdir, '_static')
+        filename = os.path.join(staticdir,app.config.ref_graph_default_ref_file)
+        with open(filename,"a", encoding="utf-8") as out:
+            for md_file, text, target in all_refs:
+                out.write(f"{md_file} -> [text: '{text}'] [target: '{target}']\n")
+    
+    if len(all_groups)>0:
+        print(all_groups)
+        staticdir = os.path.join(app.builder.outdir, '_static')
+        filename = os.path.join(staticdir,app.config.ref_graph_default_group_file)
+        with open(filename,"a", encoding="utf-8") as out:
+            for md_file, tag in all_groups:
+                out.write(f"{md_file} -> [tag: '{tag}']\n")
+    
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    print('!!!! END PROCESS TAGS !!!!')
+    print('!!!!!!!!!!!!!!!!!!!!!!!!!!')
+
     pass
