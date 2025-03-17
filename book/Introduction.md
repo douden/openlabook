@@ -1,6 +1,6 @@
 # Introduction
 
-:::{tags} GROUP
+:::{tags} Introduction
 
 Sec:CrossProduct
 test <Sec:DotProduct>
