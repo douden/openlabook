@@ -159,7 +159,7 @@ class RefGraphDirective(SphinxDirective):
     def run(self) -> list[nodes.Node]:
         graph_node = ref_graph()        
         staticdir = os.path.join(self.env.app.builder.outdir, '_static')
-        html = f'<iframe id="ref_graph" src="/_static/{self.env.config.ref_graph_html_file}" style="width: 100%; aspect-ratio: 2 / 1; border: none; border-radius: 8px;"></iframe>'
+        html = f'<iframe id="ref_graph" src="/_static/{self.env.config.ref_graph_html_file}" style="width: 100%; aspect-ratio: 1 / 1; border: none; border-radius: 8px;"></iframe>'
         
         html_node = nodes.raw(None, html, format="html")
         graph_node.insert(0,html_node)
@@ -179,6 +179,7 @@ def setup(app: Sphinx):
 
     app.add_config_value("ref_graph_temp_file","ref_graph.temp",'env')
     app.add_config_value("ref_graph_html_file","ref_graph.html",'env')
+    app.add_config_value("ref_graph_js_file","ref_graph.js",'env')
 
     app.add_directive("refgraph", RefGraphDirective)
 
@@ -188,8 +189,10 @@ def setup(app: Sphinx):
                  text=(visit_ref_graph_node, depart_ref_graph_node))
     
     app.connect('doctree-resolved', process_ref_nodes)
-
+    # app.connect('build-finished',write_js)
     app.connect('build-finished',write_html)
+
+    # app.add_js_file("ref_graph.js")
 
     return {'parallel_write_safe': False}
 
@@ -331,12 +334,31 @@ def write_html(app,exc):
     html_lines = html_lines[:(found+1)]+new_lines+html_lines[(found+1):]
     for i,line in enumerate(html_lines):
         if f"width: {width}," in line:
-            html_lines[i] = line.replace(f"width: {width},","width: 0.95*width,")
+            html_lines[i] = line.replace(f"width: {width},","width: 0.99*width,")
         if f"height: {height}," in line:
-            html_lines[i] = line.replace(f"height: {height},","height: 0.95*height,")
+            html_lines[i] = line.replace(f"height: {height},","height: 0.99*height,")
         if "directed: false," in line:
             html_lines[i] = line.replace("directed: false,","directed: true,")
+
+    # Now to the same for the CSS
+    found = -1
+    for i,line in enumerate(html_lines):
+        if '<style type="text/css">' in line:
+            found = i
+            break
+    new_lines = [" body {\n","margin: 0;\n","overflow: hidden;\n","}\n"]
+    html_lines = html_lines[:(found+1)]+new_lines+html_lines[(found+1):]
 
     with open(filename,'w', encoding="utf8") as html:
         html.writelines(html_lines)
     pass
+
+# def write_js(app,exc):
+
+#     # # js_content = f'document.addEventListener("DOMContentLoaded", function() {{\nvar iframe = document.getElementById("ref_graph");\nif (iframe) {{\niframe.src = window.origin.concat(iframe.src);\n}}\n}});'
+#     # staticdir = os.path.join(app.builder.outdir, '_static')
+#     # js_file = os.path.join(staticdir,app.config.ref_graph_js_file)
+#     # with open(js_file,'w') as js:
+#     #     js.write(js_content)
+
+#     pass
