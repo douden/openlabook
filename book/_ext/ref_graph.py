@@ -155,10 +155,17 @@ class RefGraphDirective(SphinxDirective):
     has_content = False
     required_arguments = 0
     optional_arguments = 0
+    option_spec = {
+        'class': directives.class_option
+    }
 
     def run(self) -> list[nodes.Node]:
         graph_node = ref_graph()
-        classes = "dark-light" # still to implement correctly
+        classes = self.options.get("class")
+        if isinstance(classes,list):
+            classes = "ref_graph "+" ".join(classes)
+        elif classes is None:
+            classes = "ref_graph"
         doc = self.env.docname
         url = f"_static/{self.env.config.ref_graph_html_file}"
         for i in range(doc.count("/")):
@@ -193,20 +200,12 @@ def setup(app: Sphinx):
                  text=(visit_ref_graph_node, depart_ref_graph_node))
     
     app.connect('doctree-resolved', process_ref_nodes)
-    # app.connect('build-finished',write_js)
     app.connect('build-finished',write_html)
-
-    # app.add_js_file(app.config.ref_graph_js_file)
 
     return {'parallel_write_safe': False}
 
-# def purge_tags(app, env, docname):
-#     if not hasattr(env, 'ref_graph_all_tags'):
-#         return
-#     env.ref_graph_all_tags = [tags for tags in env.ref_graph_all_tags if tags['docname'] != docname]
-
 def process_ref_nodes(app, doctree, fromdocname):
-    # Add here the collection of all tags and create the information for the graph 
+    # Collection of all references and create the information for the graph 
     all_refs = []
 
     for node in doctree.traverse(reference):
@@ -299,6 +298,27 @@ def write_html(app,exc):
     source_list = [link[0] for link in link_list]
     target_list = [link[1] for link in link_list]
 
+    # try to extract (first) h1 header from html file
+    titles = []
+    for node in node_list:
+        html_file = os.path.join(app.builder.outdir, node)
+        with open(html_file,'r',encoding='utf-8') as html:
+            lines = html.readlines()
+        for line in lines:
+            if "<h1" in line:
+                title = line[line.find("<h1")+3:]
+                title = title[title.find(">")+1:]
+                title = title[:title.find("<")]
+                titles.append(title)
+                break
+
+    source_string = "?".join(source_list)
+    target_string = "?".join(target_list)
+    for i,node in enumerate(node_list):
+        source_string = source_string.replace(node,titles[i])
+        target_string = target_string.replace(node,titles[i])
+    source_list = source_string.split("?")
+    target_list = target_string.split("?")
     # create adjacency matrix for d3graph
     adjmat = vec2adjmat(source_list,target_list,weight_list)
     # initialise
@@ -308,7 +328,6 @@ def write_html(app,exc):
     rng = np.random.default_rng()
     width = rng.integers(1000,2000)
     height = rng.integers(3000,4000)
-    print("(width,height)",width,height)
     filename = os.path.join(staticdir,app.config.ref_graph_html_file)
     d3.show(filepath=filename,showfig=False,show_slider=False,figsize=[width, height])
 
@@ -356,14 +375,3 @@ def write_html(app,exc):
     with open(filename,'w', encoding="utf8") as html:
         html.writelines(html_lines)
     pass
-
-# def write_js(app,exc):
-    
-#     url = f"window.origin.concat(\"/_static/{app.config.ref_graph_html_file}\")"
-#     js_content = f'document.addEventListener("DOMContentLoaded", function() {{\nvar iframe = document.getElementById("ref_graph");\nif (iframe) {{\niframe.src = {url};\n}}\n}});'
-#     staticdir = os.path.join(app.builder.outdir, '_static')
-#     js_file = os.path.join(staticdir,app.config.ref_graph_js_file)
-#     with open(js_file,'w') as js:
-#         js.write(js_content)
-
-#     pass
