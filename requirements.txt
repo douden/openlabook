@@ -14,6 +14,7 @@ TexSoup == 0.3.1
 roman == 5.0
 sphinx-named-colors == 1.0.1
 d3graph == 2.5.0
+scikit-learn == 1.6.1
 
 # Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe
