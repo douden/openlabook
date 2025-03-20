@@ -2,10 +2,7 @@
 
 # Linear Combinations
 
-:::{tags} Equations
-
-Sec:Vectors
-:::
+{bdg-ref}`Sec:Vectors`
 
 ::::{prf:definition}
 

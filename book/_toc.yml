@@ -13,7 +13,7 @@ parts:
     chapters:
       - file: 'Chapter1/intro.md'
         sections:
-          - file: 'Chapter1/Vectors.md'
+          - file: 'Chapter1/subfolder/subsubfolder/Vectors.md'
           - file: 'Chapter1/Inner_Product.md'
           - file: 'Chapter1/Cross_Product.md'
           - file: 'Chapter1/Lines_and_Planes.md'

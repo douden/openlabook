@@ -2,9 +2,6 @@
 
 # Vectors
 
-:::{tags} Vectors, Lines and Planes
-:::
-
 ## Introduction
 
 There is little need to explain the usefulness of the ordinary (real) numbers you are familiar with. Nevertheless, they have their restrictions. For example, they can only describe one aspect of an object like the height of a person, or the age of a tree, or the weight of a car. But in many cases we also want to know a person's location, or a tree's widest circumference, or a car's width.

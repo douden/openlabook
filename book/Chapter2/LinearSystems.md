@@ -2,9 +2,6 @@
 
 # Systems of Linear Equations
 
-:::{tags} Equations
-:::
-
 (Subsec:LinSystems:Intro)=
 
 ## Consistent and Inconsistent Linear Systems
