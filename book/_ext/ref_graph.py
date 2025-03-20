@@ -9,6 +9,7 @@ import numpy as np
 from sphinx.addnodes import number_reference
 
 from d3graph import d3graph, vec2adjmat
+import ast
 
 NAMED_COLORS = ['maroon',
 'red',
@@ -309,6 +310,7 @@ def write_html(app,exc):
                 title = line[line.find("<h1")+3:]
                 title = title[title.find(">")+1:]
                 title = title[:title.find("<")]
+                title = title.replace("\\vect{x}","x")
                 titles.append(title)
                 break
 
@@ -371,6 +373,22 @@ def write_html(app,exc):
             break
     new_lines = [" body {\n","margin: 0;\n","overflow: hidden;\n","}\n"]
     html_lines = html_lines[:(found+1)]+new_lines+html_lines[(found+1):]
+
+    # now replace underscores that have been added
+    for i,line in enumerate(html_lines):
+        if "graph = {" in line:
+            for title in titles:    
+                line = line.replace(title.replace(" ","_"),title)
+            # now iterate over nodes in the graph and add the links to the files (whether or not they are correct)
+            str_graph = line[line.find("=")+1:]
+            graph_dict = ast.literal_eval(str_graph)
+            for n, node_dict in enumerate(graph_dict['nodes']):
+                ind = titles.index(node_dict['name'])
+                url = node_list[ind]
+                graph_dict['nodes'][n] = node_dict | {'link':url}
+            line = "graph = "+str(graph_dict)
+            html_lines[i] = line
+
 
     with open(filename,'w', encoding="utf8") as html:
         html.writelines(html_lines)
