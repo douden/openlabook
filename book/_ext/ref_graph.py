@@ -157,9 +157,9 @@ class RefGraphDirective(SphinxDirective):
     optional_arguments = 0
 
     def run(self) -> list[nodes.Node]:
-        graph_node = ref_graph()        
-        staticdir = os.path.join(self.env.app.builder.outdir, '_static')
-        html = f'<iframe id="ref_graph" src="/_static/{self.env.config.ref_graph_html_file}" style="width: 100%; aspect-ratio: 1 / 1; border: none; border-radius: 8px;"></iframe>'
+        graph_node = ref_graph()
+        classes = "dark-light" # still to implement correctly
+        html = f'<iframe class="{classes}" id="ref_graph" src="placeholder" style="width: 100%; aspect-ratio: 1 / 1; border: none; border-radius: 8px;"></iframe>'
         
         html_node = nodes.raw(None, html, format="html")
         graph_node.insert(0,html_node)
@@ -189,10 +189,10 @@ def setup(app: Sphinx):
                  text=(visit_ref_graph_node, depart_ref_graph_node))
     
     app.connect('doctree-resolved', process_ref_nodes)
-    # app.connect('build-finished',write_js)
+    app.connect('build-finished',write_js)
     app.connect('build-finished',write_html)
 
-    # app.add_js_file("ref_graph.js")
+    app.add_js_file(app.config.ref_graph_js_file)
 
     return {'parallel_write_safe': False}
 
@@ -353,12 +353,13 @@ def write_html(app,exc):
         html.writelines(html_lines)
     pass
 
-# def write_js(app,exc):
+def write_js(app,exc):
 
-#     # # js_content = f'document.addEventListener("DOMContentLoaded", function() {{\nvar iframe = document.getElementById("ref_graph");\nif (iframe) {{\niframe.src = window.origin.concat(iframe.src);\n}}\n}});'
-#     # staticdir = os.path.join(app.builder.outdir, '_static')
-#     # js_file = os.path.join(staticdir,app.config.ref_graph_js_file)
-#     # with open(js_file,'w') as js:
-#     #     js.write(js_content)
+    url = f"window.origin.concat(\"/_static/{app.config.ref_graph_html_file}\")"
+    js_content = f'document.addEventListener("DOMContentLoaded", function() {{\nvar iframe = document.getElementById("ref_graph");\nif (iframe) {{\niframe.src = {url};\n}}\n}});'
+    staticdir = os.path.join(app.builder.outdir, '_static')
+    js_file = os.path.join(staticdir,app.config.ref_graph_js_file)
+    with open(js_file,'w') as js:
+        js.write(js_content)
 
-#     pass
+    pass
