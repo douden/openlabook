@@ -384,11 +384,18 @@ def write_html(app,exc):
             graph_dict = ast.literal_eval(str_graph)
             for n, node_dict in enumerate(graph_dict['nodes']):
                 ind = titles.index(node_dict['name'])
-                url = node_list[ind]
+                url = "../"+node_list[ind] # assumption that ref_graph.html is located in root/_static and links are from the root 
                 graph_dict['nodes'][n] = node_dict | {'link':url}
             line = "graph = "+str(graph_dict)
             html_lines[i] = line
 
+    # now replace "node.on('click', color_on_click);" with "node.on('click', open_on_click);"
+    # and add the function open_on_click
+    for i,line in enumerate(html_lines):
+        if "node.on('click', color_on_click);" in line:
+            html_lines[i] = line.replace("node.on('click', color_on_click);" , "node.on('click', open_on_click);")
+        if "</script>" in line:
+            html_lines[i] = "// OPEN ON CLICK\n	function open_on_click() {\n		d3.selectAll(\".node\")\n    .on(\"click\", function(d) {\n            console.log(d.link);\n            window.open(d.link, '_top');\n        })\n		;}\n"+line
 
     with open(filename,'w', encoding="utf8") as html:
         html.writelines(html_lines)
