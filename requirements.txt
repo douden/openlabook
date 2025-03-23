@@ -5,7 +5,7 @@ sphinx-image-inverter == 1.1.2
 download_link_replacer == 1.0.4
 sphinx-exercise == 1.0.1
 sphinx-tudelft-theme == 1.1.5
-teachbooks-sphinx-tippy == 1.0.6
+teachbooks-sphinx-tippy == 1.0.8
 sphinx-iframes == 1.0.5
 sphinx-proof == 0.2.1
 teachbooks-sphinx-grasple == 1.0.5
