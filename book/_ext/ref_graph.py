@@ -268,7 +268,7 @@ def process_ref_nodes(app, doctree, fromdocname):
 
     pass
 
-def write_html(app,exc):
+def write_html(app: Sphinx,exc):
 
     # import the (finished) ref_graph temp file and convert it to an adjacency matrix
     # Step 0: load data from temp file as set of lines
@@ -321,82 +321,42 @@ def write_html(app,exc):
         target_string = target_string.replace(node,titles[i])
     source_list = source_string.split("?")
     target_list = target_string.split("?")
-    # create adjacency matrix for d3graph
-    adjmat = vec2adjmat(source_list,target_list,weight_list)
-    # initialise
-    d3 = d3graph()
-    d3.graph(adjmat)
-    # export to html file
-    rng = np.random.default_rng()
-    width = rng.integers(1000,2000)
-    height = rng.integers(3000,4000)
+
+    # Create two json/dicts for direct input in JS
+    node_dicts = []
+    for i,node in enumerate(node_list):
+        if i<5:
+            node_dict = {"name":titles[i],
+                         "group": "First-tag", # adapt with tags in future, make dashes
+                         "link":"../"+node}
+        else:
+            node_dict = {"name":titles[i],
+                         "group": "Second-tag", # adapt with tags in future, no space, make dashes
+                         "link":"../"+node}
+        node_dicts.append(node_dict)
+    
+    print("const nodes = ",node_dicts,";")
+
+    link_dicts = []
+    for i,source in enumerate(source_list):
+        link_dict = {"source_label" : source,
+                     "source" : titles.index(source),
+                     "target_label" : target_list[i],
+                     "target" : titles.index(target_list[i])}
+        link_dicts.append(link_dict)
+    print("const links = ",link_dicts,";")
+
+    import_html = os.path.join(os.path.dirname(__file__), 'static', "ref_graph.html")
+    with open(import_html,'r') as html:
+        data = html.readlines()
+    for i,line in enumerate(data):
+        if '<nodes-line>' in line:
+            data[i] = "const nodes = "+str(node_dicts)+";"
+        if '<links-line>' in line:
+            data[i] = "const links = "+str(link_dicts)+";"
+
     filename = os.path.join(staticdir,app.config.ref_graph_html_file)
-    d3.show(filepath=filename,showfig=False,show_slider=False,figsize=[width, height])
+    with open(filename,'w') as file:
+        file.writelines(data)
 
-    # load the html file and remove several unneeded lines
-    remove = ['id="saveButton"',"ethicalads","erdogantgithubio"]
-    with open(filename,'r', encoding="utf8") as html:
-        html_lines = html.readlines()
-    for screwit in remove:
-        found = -1
-        for i,html_line in enumerate(html_lines):
-            if screwit in html_line:
-                found = i
-                break
-        if found>=0:
-            if "saveButton" in html_line:
-                html_lines = html_lines[:(found-1)]+html_lines[(found+2):]
-            else:
-                html_lines = html_lines[:found]+html_lines[(found+1):]
-
-    # now find specfic lines for settting the height and the width and make them responsive
-    found = -1
-    for i,line in enumerate(html_lines):
-        if "window.addEventListener('DOMContentLoaded', function () {" in line:
-            found = i
-            break
-    new_lines = ["const width = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);\n","const height = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);\n"]
-    html_lines = html_lines[:(found+1)]+new_lines+html_lines[(found+1):]
-    for i,line in enumerate(html_lines):
-        if f"width: {width}," in line:
-            html_lines[i] = line.replace(f"width: {width},","width: 0.99*width,")
-        if f"height: {height}," in line:
-            html_lines[i] = line.replace(f"height: {height},","height: 0.99*height,")
-        if "directed: false," in line:
-            html_lines[i] = line.replace("directed: false,","directed: true,")
-
-    # Now to the same for the CSS
-    found = -1
-    for i,line in enumerate(html_lines):
-        if '<style type="text/css">' in line:
-            found = i
-            break
-    new_lines = [" body {\n","margin: 0;\n","overflow: hidden;\n","}\n"]
-    html_lines = html_lines[:(found+1)]+new_lines+html_lines[(found+1):]
-
-    # now replace underscores that have been added
-    for i,line in enumerate(html_lines):
-        if "graph = {" in line:
-            for title in titles:    
-                line = line.replace(title.replace(" ","_"),title)
-            # now iterate over nodes in the graph and add the links to the files (whether or not they are correct)
-            str_graph = line[line.find("=")+1:]
-            graph_dict = ast.literal_eval(str_graph)
-            for n, node_dict in enumerate(graph_dict['nodes']):
-                ind = titles.index(node_dict['name'])
-                url = "../"+node_list[ind] # assumption that ref_graph.html is located in root/_static and links are from the root 
-                graph_dict['nodes'][n] = node_dict | {'link':url}
-            line = "graph = "+str(graph_dict)
-            html_lines[i] = line
-
-    # now replace "node.on('click', color_on_click);" with "node.on('click', open_on_click);"
-    # and add the function open_on_click
-    for i,line in enumerate(html_lines):
-        if "node.on('click', color_on_click);" in line:
-            html_lines[i] = line.replace("node.on('click', color_on_click);" , "node.on('click', open_on_click);")
-        if "</script>" in line:
-            html_lines[i] = "// OPEN ON CLICK\n	function open_on_click() {\n		d3.selectAll(\".node\")\n    .on(\"click\", function(d) {\n            console.log(d.link);\n            window.open(d.link, '_top');\n        })\n		;}\n"+line
-
-    with open(filename,'w', encoding="utf8") as html:
-        html.writelines(html_lines)
     pass
