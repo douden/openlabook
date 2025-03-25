@@ -3,6 +3,10 @@
 :::{refgraph}
 :::
 
+:::{refgraph}
+:class: dark-light
+:::
+
 {doc}`index`
 {ref}`Sec:LinearCombinations`
 

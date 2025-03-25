@@ -2,155 +2,25 @@ from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
 from docutils.parsers.rst import directives
 from docutils import nodes
-from sphinx_design.shared import SEMANTIC_COLORS
 from docutils.nodes import reference
 import os
 import numpy as np
 from sphinx.addnodes import number_reference
 
-from d3graph import d3graph, vec2adjmat
-import ast
-
-NAMED_COLORS = ['maroon',
-'red',
-'purple',
-'fuchsia',
-'green',
-'lime',
-'olive',
-'yellow',
-'navy',
-'blue',
-'teal',
-'aqua',
-'aliceblue',
-'aqua',
-'aquamarine',
-'azure',
-'beige',
-'bisque',
-'blanchedalmond',
-'blue',
-'blueviolet',
-'brown',
-'burlywood',
-'cadetblue',
-'chartreuse',
-'chocolate',
-'coral',
-'cornflowerblue',
-'cornsilk',
-'crimson',
-'cyan',
-'darkblue',
-'darkcyan',
-'darkgoldenrod',
-'darkgreen',
-'darkkhaki',
-'darkmagenta',
-'darkolivegreen',
-'darkorange',
-'darkorchid',
-'darkred',
-'darksalmon',
-'darkseagreen',
-'darkslateblue',
-'darkturquoise',
-'darkviolet',
-'deeppink',
-'deepskyblue',
-'dodgerblue',
-'firebrick',
-'forestgreen',
-'fuchsia',
-'gainsboro',
-'gold',
-'goldenrod',
-'green',
-'greenyellow',
-'honeydew',
-'hotpink',
-'indianred',
-'indigo',
-'ivory',
-'khaki',
-'lavender',
-'lavenderblush',
-'lawngreen',
-'lemonchiffon',
-'lightblue',
-'lightcoral',
-'lightcyan',
-'lightgoldenrodyellow',
-'lightgreen',
-'lightpink',
-'lightsalmon',
-'lightseagreen',
-'lightskyblue',
-'lightsteelblue',
-'lightyellow',
-'lime',
-'limegreen',
-'linen',
-'magenta',
-'maroon',
-'mediumaquamarine',
-'mediumblue',
-'mediumorchid',
-'mediumpurple',
-'mediumseagreen',
-'mediumslateblue',
-'mediumspringgreen',
-'mediumturquoise',
-'mediumvioletred',
-'midnightblue',
-'mintcream',
-'mistyrose',
-'moccasin',
-'navy',
-'oldlace',
-'olive',
-'olivedrab',
-'orange',
-'orangered',
-'orchid',
-'palegoldenrod',
-'palegreen',
-'paleturquoise',
-'palevioletred',
-'papayawhip',
-'peachpuff',
-'peru',
-'pink',
-'plum',
-'powderblue',
-'purple',
-'rebeccapurple',
-'red',
-'rosybrown',
-'royalblue',
-'saddlebrown',
-'salmon',
-'sandybrown',
-'seagreen',
-'seashell',
-'sienna',
-'silver',
-'skyblue',
-'slateblue',
-'snow',
-'springgreen',
-'steelblue',
-'tan',
-'teal',
-'thistle',
-'tomato',
-'turquoise',
-'violet',
-'wheat',
-'yellow',
-'yellowgreen'
-]
+FIXED_COLORS = {
+    "#00A6D6":0,
+    "#0C2340":0,
+    "#00B8C8":0,
+    "#0076C2":0,
+    "#6F1D77":0,
+    "#EF60A3":0,
+    "#A50034":0,
+    "#E03C31":0,
+    "#EC6842":0,
+    "#FFB81C":0,
+    "#6CC24A":0,
+    "#009B77":0
+}
 
 class RefGraphDirective(SphinxDirective):
     has_content = False
@@ -325,13 +195,17 @@ def write_html(app: Sphinx,exc):
     # Create two json/dicts for direct input in JS
     node_dicts = []
     for i,node in enumerate(node_list):
-        if i<5:
+        if i<3:
             node_dict = {"name":titles[i],
-                         "group": "First-tag", # adapt with tags in future, make dashes
+                         "group": "Firsttag", # adapt with tags in future, make dashes
+                         "link":"../"+node}
+        elif i<7:
+            node_dict = {"name":titles[i],
+                         "group": "Second-tag", # adapt with tags in future, no space, make dashes
                          "link":"../"+node}
         else:
             node_dict = {"name":titles[i],
-                         "group": "Second-tag", # adapt with tags in future, no space, make dashes
+                        #  "group": "Second-tag", # adapt with tags in future, no space, make dashes
                          "link":"../"+node}
         node_dicts.append(node_dict)
     

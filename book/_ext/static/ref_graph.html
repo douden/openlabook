@@ -15,12 +15,12 @@
       top: 0;
       left: 0;
     }
-    .link { stroke: #999; stroke-opacity: 0.6; stroke-width: 2px; }
-    .node { cursor: pointer; stroke: #fff; stroke-width: 1.5px; }
+    .link { stroke: #808080; stroke-opacity: 0.6; stroke-width: 2px; }
+    .node { cursor: pointer; stroke: #80808020; stroke-width: 1.5px; }
     .label { font-size: 12px; pointer-events: none; }
     /* Hull styling is set dynamically */
     .hull {
-      stroke: #999;
+      stroke: #00A6D620;
       stroke-width: 1px;
       opacity: 0.3;
     }
@@ -81,8 +81,8 @@ const visualMargin = maxdim * 0.025;
 
 // Dummy dictionary mapping tag values (in lowercase) to colors.
 const groupColors = {
-  "First-tag": "#ff8888",  // light red
-  "Second-tag": "#88ff88",      // light green
+  "First-tag": "#E03C31",  // light red
+  "Second-tag": "#6CC24A",      // light green
   // Add additional mappings as needed.
 };
 
@@ -151,9 +151,9 @@ function restoreNodePositions(nodes) {
 // 5) Set nodes and links
 // ----------------------------------
   
-  <nodes-line>
+//  <nodes-line>
 
-  <links-line>
+//  <links-line>
     
   // Build the final list of nodes
   // const nodes = Array.from(nodesMap.values());
@@ -232,9 +232,9 @@ function restoreNodePositions(nodes) {
     .attr("r", d => d.radius)
     .style("fill", d => {
       if (d.tag) {
-        return groupColors[d.tag] || "#aaa";
+        return groupColors[d.tag] || "#00A6D6";
       } else {
-        return "#ccc";
+        return "#00A6D6";
       }
     })
     .call(d3.drag()
@@ -287,13 +287,13 @@ function restoreNodePositions(nodes) {
     const hullPaths = hullGroup.selectAll("path")
         .data(hullData, d => d.tag);
     
-    hullPaths.enter()
+        hullPaths.enter()
       .append("path")
       .attr("class", d => "hull " + d.tag)
       .merge(hullPaths)
       .attr("d", d => "M" + d.hull.join("L") + "Z")
-      .style("fill", d => groupColors[d.tag] || "#ccc")
-      .style("stroke", "#999")
+      .style("fill", d => groupColors[d.tag] || "#00A6D6")
+      .style("stroke", "#00A6D620")
       .style("opacity", 0.3);
     
     hullPaths.exit().remove();
