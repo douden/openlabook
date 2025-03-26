@@ -2,8 +2,6 @@
 
 # Linear Combinations
 
-{bdg-ref}`Sec:Vectors`
-
 ::::{prf:definition}
 
 Let $\mathbf{v}_1, \ldots, \mathbf{v}_n$ be vectors in $\mathbb{R}^m$. Any expression of the form

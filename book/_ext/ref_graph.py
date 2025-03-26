@@ -1,5 +1,6 @@
 from sphinx.application import Sphinx
 from sphinx.util.docutils import SphinxDirective
+from sphinx.util.docutils import SphinxRole
 from docutils.parsers.rst import directives
 from docutils import nodes
 from docutils.nodes import reference
@@ -8,18 +9,15 @@ import numpy as np
 from sphinx.addnodes import number_reference
 
 FIXED_COLORS = {
-    "#00A6D6":0,
-    "#0C2340":0,
-    "#00B8C8":0,
-    "#0076C2":0,
-    "#6F1D77":0,
-    "#EF60A3":0,
-    "#A50034":0,
-    "#E03C31":0,
-    "#EC6842":0,
-    "#FFB81C":0,
-    "#6CC24A":0,
-    "#009B77":0
+    "#0C2340":0, # Donkerblauw > light+dark prima
+    "#00B8C8":0, # Turkoois > light+dark prima
+    "#0076C2":0, # Koningsblauw > light+dark prima
+    "#6F1D77":0, # Paars > light+dark prima
+    "#EF60A3":0, # Roze > light+dark prima
+    "#A50034":0, # Bordeaux > light+dark prima
+    "#E03C31":0, # Rood > light+dark prima
+    "#EC6842":0, # Oranje > light+dark prima
+    "#009B77":0 # Bosgroen > light+dark prima
 }
 
 class RefGraphDirective(SphinxDirective):
@@ -57,6 +55,21 @@ def visit_ref_graph_node(self, node):
 def depart_ref_graph_node(self, node):
     pass
 
+class HiddenReferences(SphinxDirective):
+    has_content = True
+    required_arguments = 0
+    optional_arguments = 0
+
+    def run(self) -> list[nodes.Node]:
+        
+        html_start = '<span hidden>'
+        html_end = '</span>'
+        node_0 = nodes.raw(None, html_start, format="html")
+        node_1 = nodes.raw(None, html_end, format="html")
+        nodelist = [node_0] + self.parse_content_to_nodes() + [node_1]
+        
+        return nodelist
+    
 def setup(app: Sphinx):
 
     app.add_config_value("ref_graph_temp_file","ref_graph.temp",'env')
@@ -64,6 +77,7 @@ def setup(app: Sphinx):
     app.add_config_value("ref_graph_js_file","ref_graph.js",'env')
 
     app.add_directive("refgraph", RefGraphDirective)
+    app.add_directive("hiddenrefs",HiddenReferences)
 
     app.add_node(ref_graph,
                  html=(visit_ref_graph_node, depart_ref_graph_node),
@@ -197,7 +211,7 @@ def write_html(app: Sphinx,exc):
     for i,node in enumerate(node_list):
         if i<3:
             node_dict = {"name":titles[i],
-                         "group": "Firsttag", # adapt with tags in future, make dashes
+                         "group": "First-tag", # adapt with tags in future, make dashes
                          "link":"../"+node}
         elif i<7:
             node_dict = {"name":titles[i],
@@ -205,7 +219,6 @@ def write_html(app: Sphinx,exc):
                          "link":"../"+node}
         else:
             node_dict = {"name":titles[i],
-                        #  "group": "Second-tag", # adapt with tags in future, no space, make dashes
                          "link":"../"+node}
         node_dicts.append(node_dict)
     
