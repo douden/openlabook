@@ -87,18 +87,8 @@ function extractTitle(filename) {
 // Margin for hull expansion.
 const visualMargin = maxdim * 0.025;
 
-// Dictionary mapping tag values (in lowercase) to colors.
-const groupColors = {
-  "Vectors": "#1f77b4",
-  "Systems": "#ff7f0e",
-  "Matrix operations": "#2ca02c",
-  "Determinants": "#d62728",
-  "Eigenvalues": "#9467bd",
-  "Orthogonality": "#8c564b",
-  "Symmetric matrices": "#e377c2",
-  "Dynamical systems": "#7f7f7f",
-  // Add more tags and colors as needed
-};
+// Dummy dictionary mapping tag values (in lowercase) to colors.
+<color-line>
 
 // Utility: Compute an expanded convex hull for a set of nodes given a margin.
 function computeExpandedHull(groupNodes, margin) {
