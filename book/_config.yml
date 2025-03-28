@@ -13,6 +13,8 @@ sphinx:
   config:
     ref_graph_remove_links: ['Introduction.html -> Colophon/Acknowledgements.html']
     ref_graph_tag_color: {'Eigenvalues':'#FCDC5A'}
+    ref_graph_internal_links: true
+    ref_graph_toc_links: true
     numfig_secnum_depth: 2
     html_static_path:
     - _static

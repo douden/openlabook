@@ -8,15 +8,15 @@ from sphinx.addnodes import number_reference
 import ast
 
 FIXED_COLORS = [
-    "#6F1D77", # Paars > light+dark prima
-    "#0C2340", # Donkerblauw > light+dark prima
-    "#EC6842", # Oranje > light+dark prima
-    "#0076C2", # Koningsblauw > light+dark prima
-    "#E03C31", # Rood > light+dark prima
-    "#00B8C8", # Turkoois > light+dark prima
-    "#EF60A3", # Roze > light+dark prima
-    "#009B77", # Bosgroen > light+dark prima
-    "#A50034", # Bordeaux > light+dark prima
+    "#6F1D77", # Light Purple
+    "#0C2340", # Dark Blue
+    "#EC6842", # Orange
+    "#0076C2", # Royal Blue
+    "#E03C31", # Red
+    "#00B8C8", # Turquoise
+    "#EF60A3", # Pink
+    "#009B77", # Forrest Green
+    "#A50034", # Burgundy
 ]    
 
 class RefGraphDirective(SphinxDirective):
@@ -140,8 +140,6 @@ def process_ref_nodes(app: Sphinx, doctree, fromdocname):
                 for source, target in all_refs:
                     # don't do it if we want to ignore it
                     line = f"{source} -> {target}"
-                    print("line:",line)
-                    print("remove",app.config.ref_graph_remove_links)
                     if line not in app.config.ref_graph_remove_links:
                         out.write(line+"\n")
 
