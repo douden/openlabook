@@ -181,7 +181,7 @@ Using the dot product the concepts length and perpendicular easily carry over to
 ::::{prf:definition}
 :label: Dfn:InnerProduct:DotProduct
 
-The **dot product** (or _inner product_) of two vectors
+The **{index}`! dot product`** (or _inner product_) of two vectors
 $\mathbf{v}=\begin{bmatrix}a_{1}\\a_{2}\\ \vdots\\a_{n}\end{bmatrix}$ and
 $\mathbf{w}=\begin{bmatrix}b_{1}\\b_{2}\\ \vdots\\b_{n}\end{bmatrix}$ in $\mathbb{R}^n$ is defined as
 
@@ -220,11 +220,11 @@ $$
   \mathbf{v}_3=\begin{bmatrix} -4\\3\\2\end{bmatrix}
 $$
 
-is not defined. In fact, the dot product of a vector $\mathbf{v}$ in $\mathbb{R}^m$ and a vector $\mathbf{w}$ in $\mathbb{R}^n$ is only defined if $m = n$.
+is not defined. In fact, the {index}`dot product` of a vector $\mathbf{v}$ in $\mathbb{R}^m$ and a vector $\mathbf{w}$ in $\mathbb{R}^n$ is only defined if $m = n$.
 
 :::
 
-We state the characteristic rules of the dot product in $\mathbb{R}^n$, which in the sequel we will use time and again, in the following
+We state the characteristic rules of the {index}`dot product` in $\mathbb{R}^n$, which in the sequel we will use time and again, in the following
 proposition.
 
 :::{prf:proposition}
@@ -1015,7 +1015,7 @@ $$
 :::{admonition} Proof of&nbsp;{prf:ref}`Thm:InnerProduct:PythagorasInRn`
 :class: tudproof
 
-This follows quite straightforwardly from the properties of the dot product.
+This follows quite straightforwardly from the properties of the {index}`dot product`.
 
 Let us start from the identity on the left and work our way to the conclusion on the right, making sure that each step is reversible.
 Note that from the definition of the norm it follows immediately that $\norm{\mathbf{v}}^2 = \mathbf{v}\ip\mathbf{v}$.
@@ -1432,7 +1432,7 @@ Since we have defined the dot product and the norm in $\mathbb{R}^n$, we can use
 :::{prf:definition}
 :label: Dfn:InnerProduct:AngleInRn
 
-For two nonzero vectors $\mathbf{v}$ and $\mathbf{w}$ in $\mathbb{R}^n$, the **angle** between the vectors is defined as
+For two nonzero vectors $\mathbf{v}$ and $\mathbf{w}$ in $\mathbb{R}^n$, the **{index}``angle``** between the vectors is defined as
 
 $$
 
