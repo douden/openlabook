@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +22,15 @@
       stroke: #00A6D620;
       stroke-width: 1px;
       opacity: 0.3;
+    }
+    .legend {
+      font-family: Helvetica, sans-serif;
+      font-size: 14px;
+      fill: #000;
+    }
+    .legend rect {
+      stroke-width: 2;
+      stroke: white;
     }
   </style>
 </head>
@@ -79,9 +87,18 @@ function extractTitle(filename) {
 // Margin for hull expansion.
 const visualMargin = maxdim * 0.025;
 
-// Dummy dictionary mapping tag values (in lowercase) to colors.
-<color-line>
-
+// Dictionary mapping tag values (in lowercase) to colors.
+const groupColors = {
+  "Vectors": "#1f77b4",
+  "Systems": "#ff7f0e",
+  "Matrix operations": "#2ca02c",
+  "Determinants": "#d62728",
+  "Eigenvalues": "#9467bd",
+  "Orthogonality": "#8c564b",
+  "Symmetric matrices": "#e377c2",
+  "Dynamical systems": "#7f7f7f",
+  // Add more tags and colors as needed
+};
 
 // Utility: Compute an expanded convex hull for a set of nodes given a margin.
 function computeExpandedHull(groupNodes, margin) {
@@ -150,187 +167,211 @@ function restoreNodePositions(nodes) {
 //  <nodes-line>
 
 //  <links-line>
-    
-  // Build the final list of nodes
-  // const nodes = Array.from(nodesMap.values());
-  // Ensure each node has its tag property if available.
-  nodes.forEach(node => {
-    if (!node.tag) {
-      node.tag = node.group;
-    }
-  });
-
-  // Create ReferenceCOunt
-  const referenceCounts = new Map();
-  links.forEach(count_links);
-    
-  function count_links (link) {
-    referenceCounts.set(link.target_label, (referenceCounts.get(link.target_label) || 0) + 1);
-    referenceCounts.set(link.source_label, (referenceCounts.get(link.source_label) || 0) + 1);
-  };
-
-  // Assign node radii based on reference counts
-  const minRadius = maxdim * 0.01;
-  const maxRadius = maxdim * 0.01;
-  const maxReferences = 10;
-  nodes.forEach(node => {
-    const count = referenceCounts.get(node.name) || 0;
-    node.radius = minRadius + (maxRadius - minRadius) * Math.min(count / maxReferences, 1);
-  });
-
-  // ----------------------------------
-  // 6) Optionally restore positions
-  //    so the sim starts from the latest known state
-  // ----------------------------------
-  const hadSavedPositions = restoreNodePositions(nodes);
-
-  // Create the force simulation
-  const simulation = d3.forceSimulation(nodes)
-    .force("link", d3.forceLink(links).distance(maxdim * 0.1))
-    .force("charge", d3.forceManyBody().strength(-maxdim / 2).distanceMax(maxdim * 0.25))
-    .force("center", d3.forceCenter(width / 2, height / 2).strength(0.1))
-    .on("tick", ticked)
-    .on("end", () => {
-      // Once the simulation ends, store final positions
-      saveNodePositions(nodes);
-    });
-
-  // If we did restore positions, let’s start from a lower alpha so it doesn’t drastically rearrange.
-  // But it WILL continue to run.
-  if (hadSavedPositions) {
-    // You can tweak this alpha to control how much the existing layout changes
-    simulation.alpha(0.3).restart(); 
-  } else {
-    // Normal start
-    simulation.alpha(1).restart();
+  
+// Build the final list of nodes
+// const nodes = Array.from(nodesMap.values());
+// Ensure each node has its tag property if available.
+nodes.forEach(node => {
+  if (!node.tag) {
+    node.tag = node.group;
   }
+});
 
-  // Create the links
-  const link = gContainer.selectAll(".link")
-    .data(links)
-    .enter()
-    .append("line")
-    .attr("class", "link");
+// Create ReferenceCount
+const referenceCounts = new Map();
+links.forEach(count_links);
+  
+function count_links (link) {
+  referenceCounts.set(link.target_label, (referenceCounts.get(link.target_label) || 0) + 1);
+  referenceCounts.set(link.source_label, (referenceCounts.get(link.source_label) || 0) + 1);
+};
 
-  // Create node elements
-  const node = gContainer.selectAll(".node")
-    .data(nodes)
-    .enter()
-    .append("circle")
-    .attr("class", d => {
-      let classes = "node";
-      if (d.tag) {
-        const tagClass = d.tag;
-        classes += " " + tagClass;
-      }
-      return classes;
-    })
-    .attr("r", d => d.radius)
-    .style("fill", d => {
-      if (d.tag) {
-        return groupColors[d.tag] || "#00A6D6";
-      } else {
-        return "#00A6D6";
-      }
-    })
-    .call(d3.drag()
-      .on("start", dragStarted)
-      .on("drag", dragged)
-      .on("end", dragEnded)
-    )
-    .on("click", (event, d) => {
-      if (d.link) window.open(d.link, "_top");
-    });
+// Assign node radii based on reference counts
+const minRadius = maxdim * 0.01;
+const maxRadius = maxdim * 0.01;
+const maxReferences = 10;
+nodes.forEach(node => {
+  const count = referenceCounts.get(node.name) || 0;
+  node.radius = minRadius + (maxRadius - minRadius) * Math.min(count / maxReferences, 1);
+});
 
-  // Create labels
-  const label = gContainer.selectAll(".label")
-    .data(nodes)
-    .enter()
-    .append("text")
-    .style("font-size", (maxdim * 0.01) + "px")
-    .attr("class", "label")
-    .attr("text-anchor", "middle")
-    .attr("dy", d => -d.radius - 5)
-    .text(d => d.name);
+// ----------------------------------
+// 6) Optionally restore positions
+//    so the sim starts from the latest known state
+// ----------------------------------
+const hadSavedPositions = restoreNodePositions(nodes);
 
-  function ticked() {
-    link
-      .attr("x1", d => d.source.x)
-      .attr("y1", d => d.source.y)
-      .attr("x2", d => d.target.x)
-      .attr("y2", d => d.target.y);
-
-    node
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
-
-    label
-      .attr("x", d => d.x)
-      .attr("y", d => d.y);
-    
-    // --- Compute and render hulls for each tag group ---
-    const groups = d3.group(nodes.filter(d => d.tag), d => d.tag);
-    const hullData = [];
-    groups.forEach((groupNodes, tag) => {
-       if (groupNodes.length >= 3) {
-         const hull = computeExpandedHull(groupNodes, visualMargin);
-         if (hull) {
-           hullData.push({ tag: tag, hull: hull });
-         }
-       }
-    });
-    
-    const hullPaths = hullGroup.selectAll("path")
-        .data(hullData, d => d.tag);
-    
-        hullPaths.enter()
-      .append("path")
-      .attr("class", d => "hull " + d.tag)
-      .merge(hullPaths)
-      .attr("d", d => "M" + d.hull.join("L") + "Z")
-      .style("fill", d => groupColors[d.tag] || "#00A6D6")
-      .style("stroke", "#00A6D620")
-      .style("opacity", 0.3);
-    
-    hullPaths.exit().remove();
-    // --- End hull rendering ---
-  }
-
-  // --- Drag handlers ---
-  function dragStarted(event, d) {
-    if (!event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-  }
-  function dragged(event, d) {
-    d.fx = event.x;
-    d.fy = event.y;
-  }
-  function dragEnded(event, d) {
-    if (!event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
-    // Save positions again, to capture the user's drag
+// Create the force simulation
+const simulation = d3.forceSimulation(nodes)
+  .force("link", d3.forceLink(links).distance(maxdim * 0.1))
+  .force("charge", d3.forceManyBody().strength(-maxdim / 2).distanceMax(maxdim * 0.25))
+  .force("center", d3.forceCenter(width / 2, height / 2).strength(0.1))
+  .on("tick", ticked)
+  .on("end", () => {
+    // Once the simulation ends, store final positions
     saveNodePositions(nodes);
-  }
+  });
 
-  // ----------------------------------
-  // 7) Call the zoom on the SVG,
-  //    then apply any saved transform
-  // ----------------------------------
-  svg.call(zoom);
+// If we did restore positions, let’s start from a lower alpha so it doesn’t drastically rearrange.
+// But it WILL continue to run.
+if (hadSavedPositions) {
+  // You can tweak this alpha to control how much the existing layout changes
+  simulation.alpha(0.3).restart(); 
+} else {
+  // Normal start
+  simulation.alpha(1).restart();
+}
 
-  if (savedTransform) {
-    try {
-      const t = JSON.parse(savedTransform);
-      // Construct a D3 ZoomIdentity with the stored translate (x,y) and scale (k)
-      const restored = d3.zoomIdentity.translate(t.x, t.y).scale(t.k);
-      // Apply it
-      svg.call(zoom.transform, restored);
-    } catch (err) {
-      console.warn("Could not parse saved zoom transform:", err);
+// Create the links
+const link = gContainer.selectAll(".link")
+  .data(links)
+  .enter()
+  .append("line")
+  .attr("class", "link");
+
+// Create node elements
+const node = gContainer.selectAll(".node")
+  .data(nodes)
+  .enter()
+  .append("circle")
+  .attr("class", d => {
+    let classes = "node";
+    if (d.tag) {
+      const tagClass = d.tag;
+      classes += " " + tagClass;
     }
-  };
+    return classes;
+  })
+  .attr("r", d => d.radius)
+  .style("fill", d => {
+    if (d.tag) {
+      return groupColors[d.tag] || "#00A6D6";
+    } else {
+      return "#00A6D6";
+    }
+  })
+  .call(d3.drag()
+    .on("start", dragStarted)
+    .on("drag", dragged)
+    .on("end", dragEnded)
+  )
+  .on("click", (event, d) => {
+    if (d.link) window.open(d.link, "_top");
+  });
+
+// Create labels
+const label = gContainer.selectAll(".label")
+  .data(nodes)
+  .enter()
+  .append("text")
+  .style("font-size", (maxdim * 0.01) + "px")
+  .attr("class", "label")
+  .attr("text-anchor", "middle")
+  .attr("dy", d => -d.radius - 5)
+  .text(d => d.name);
+
+function ticked() {
+  link
+    .attr("x1", d => d.source.x)
+    .attr("y1", d => d.source.y)
+    .attr("x2", d => d.target.x)
+    .attr("y2", d => d.target.y);
+
+  node
+    .attr("cx", d => d.x)
+    .attr("cy", d => d.y);
+
+  label
+    .attr("x", d => d.x)
+    .attr("y", d => d.y);
+  
+  // --- Compute and render hulls for each tag group ---
+  const groups = d3.group(nodes.filter(d => d.tag), d => d.tag);
+  const hullData = [];
+  groups.forEach((groupNodes, tag) => {
+     if (groupNodes.length >= 3) {
+       const hull = computeExpandedHull(groupNodes, visualMargin);
+       if (hull) {
+         hullData.push({ tag: tag, hull: hull });
+       }
+     }
+  });
+  
+  const hullPaths = hullGroup.selectAll("path")
+      .data(hullData, d => d.tag);
+  
+      hullPaths.enter()
+    .append("path")
+    .attr("class", d => "hull " + d.tag)
+    .merge(hullPaths)
+    .attr("d", d => "M" + d.hull.join("L") + "Z")
+    .style("fill", d => groupColors[d.tag] || "#00A6D6")
+    .style("stroke", "#00A6D620")
+    .style("opacity", 0.3);
+  
+  hullPaths.exit().remove();
+  // --- End hull rendering ---
+}
+
+// --- Drag handlers ---
+function dragStarted(event, d) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
+function dragged(event, d) {
+  d.fx = event.x;
+  d.fy = event.y;
+}
+function dragEnded(event, d) {
+  if (!event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
+  // Save positions again, to capture the user's drag
+  saveNodePositions(nodes);
+}
+
+// ----------------------------------
+// 7) Call the zoom on the SVG,
+//    then apply any saved transform
+// ----------------------------------
+svg.call(zoom);
+
+if (savedTransform) {
+  try {
+    const t = JSON.parse(savedTransform);
+    // Construct a D3 ZoomIdentity with the stored translate (x,y) and scale (k)
+    const restored = d3.zoomIdentity.translate(t.x, t.y).scale(t.k);
+    // Apply it
+    svg.call(zoom.transform, restored);
+  } catch (err) {
+    console.warn("Could not parse saved zoom transform:", err);
+  }
+}
+
+// ----------------------------------
+// 8) Add legend
+// ----------------------------------
+const legend = svg.append("g")
+  .attr("class", "legend")
+  .attr("transform", `translate(${width - 150}, 20)`);
+
+const legendItems = Object.entries(groupColors);
+legendItems.forEach(([tag, color], i) => {
+  const legendRow = legend.append("g")
+    .attr("transform", `translate(0, ${i * 20})`);
+
+  legendRow.append("rect")
+    .attr("width", 18)
+    .attr("height", 18)
+    .attr("fill", color);
+
+  legendRow.append("text")
+    .attr("x", 24)
+    .attr("y", 9)
+    .attr("dy", "0.35em")
+    .text(tag);
+});
 </script>
 
 </body>
