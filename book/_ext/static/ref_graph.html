@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +22,14 @@
       stroke: #00A6D620;
       stroke-width: 1px;
       opacity: 0.3;
+    }
+    .legend {
+      font-family: Helvetica, sans-serif;
+      font-size: 14px;
+      fill: #000;
+    }
+    .legend rect {
+      opacity: 0.7;
     }
   </style>
 </head>
@@ -199,7 +206,7 @@ function restoreNodePositions(nodes) {
   // But it WILL continue to run.
   if (hadSavedPositions) {
     // You can tweak this alpha to control how much the existing layout changes
-    simulation.alpha(0.3).restart(); 
+    simulation.alpha(1).restart(); 
   } else {
     // Normal start
     simulation.alpha(1).restart();
@@ -247,7 +254,7 @@ function restoreNodePositions(nodes) {
     .data(nodes)
     .enter()
     .append("text")
-    .style("font-size", (maxdim * 0.01) + "px")
+    .style("font-size", "12px")
     .attr("class", "label")
     .attr("text-anchor", "middle")
     .attr("dy", d => -d.radius - 5)
@@ -320,17 +327,40 @@ function restoreNodePositions(nodes) {
   // ----------------------------------
   svg.call(zoom);
 
-  if (savedTransform) {
-    try {
-      const t = JSON.parse(savedTransform);
-      // Construct a D3 ZoomIdentity with the stored translate (x,y) and scale (k)
-      const restored = d3.zoomIdentity.translate(t.x, t.y).scale(t.k);
-      // Apply it
-      svg.call(zoom.transform, restored);
-    } catch (err) {
-      console.warn("Could not parse saved zoom transform:", err);
-    }
-  };
+  // if (savedTransform) {
+  //   try {
+  //     const t = JSON.parse(savedTransform);
+  //     // Construct a D3 ZoomIdentity with the stored translate (x,y) and scale (k)
+  //     const restored = d3.zoomIdentity.translate(t.x, t.y).scale(t.k);
+  //     // Apply it
+  //     svg.call(zoom.transform, restored);
+  //   } catch (err) {
+  //     console.warn("Could not parse saved zoom transform:", err);
+  //   }
+  // };
+  // ----------------------------------
+// 8) Add legend
+// ----------------------------------
+const legend = svg.append("g")
+  .attr("class", "legend")
+  .attr("transform", `translate(${width - 150}, 20)`);
+
+const legendItems = Object.entries(groupColors);
+legendItems.forEach(([tag, color], i) => {
+  const legendRow = legend.append("g")
+    .attr("transform", `translate(0, ${i * 20})`);
+
+  legendRow.append("rect")
+    .attr("width", 18)
+    .attr("height", 18)
+    .attr("fill", color);
+
+  legendRow.append("text")
+    .attr("x", 24)
+    .attr("y", 9)
+    .attr("dy", "0.35em")
+    .text(tag);
+});
 </script>
 
 </body>
