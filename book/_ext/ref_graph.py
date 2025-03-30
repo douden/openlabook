@@ -62,6 +62,8 @@ def setup(app: Sphinx):
     app.add_config_value("ref_graph_toc_links",True,'env')
     app.add_config_value("ref_graph_tag_color",{},'env')
     app.add_config_value("ref_graph_remove_links",[],'env')
+    app.add_config_value('ref_graph_group_nodes',False,'env')
+    app.add_config_value('ref_graph_collapse_group',False,'env')
 
     app.add_directive("refgraph", RefGraphDirective)
 
@@ -212,6 +214,56 @@ def write_html(app: Sphinx,exc):
         if not ignore_list[i]:
             node_list.append(node)
             tag_list.append(tag_list_old[i])
+    color_dict = {}
+    unique_tags = []
+    for tag in tag_list:
+        if tag not in unique_tags:
+            if tag != '':
+                unique_tags.append(tag)
+    next_color = 0
+    for tag in unique_tags:
+        if tag in app.config.ref_graph_tag_color:
+            color_dict[tag] = app.config.ref_graph_tag_color[tag]
+        else:
+            color_dict[tag] = FIXED_COLORS[next_color]
+            next_color = (next_color + 1) % len(FIXED_COLORS)
+
+    # check if a central group node must be created
+    # if so,
+    # 1) add a node per group
+    # 2) connect each node per group to the new node
+    # 3) replace each node per link with the new node
+    if app.config.ref_graph_group_nodes or app.config.ref_graph_collapse_group:
+         remove_nodes = []
+         for tag in unique_tags:
+             # connect each existing node in same group to new node and replace
+             for i,node in enumerate(node_list):
+                 if tag_list[i]==tag:
+                     for li,link in enumerate(link_list):
+                         if link[0] == node:
+                             link_list[li][0] = tag
+                         if link[1] == node:
+                             link_list[li][1] = tag
+                     if not app.config.ref_graph_collapse_group:
+                        new_link = [node,tag]
+                        link_list.append(new_link)
+                        weight_list.append(1) 
+                     else:
+                         remove_nodes.append(node)
+             # add new node to node list 
+             node_list.append(tag)
+             # assign new node to same group
+             tag_list.append(tag)
+         if len(remove_nodes)>0:
+            node_list_old = node_list.copy()
+            tag_list_old = tag_list.copy()
+            node_list = []
+            tag_list = []
+            for ni,node in enumerate(node_list_old):
+                if node not in remove_nodes:
+                    node_list.append(node)
+                    tag_list.append(tag_list_old[ni])
+             
 
     source_list = [link[0] for link in link_list]
     target_list = [link[1] for link in link_list]
@@ -219,6 +271,9 @@ def write_html(app: Sphinx,exc):
     # try to extract (first) h1 header from html file
     titles = []
     for node in node_list:
+        if '.html' not in node:
+            titles.append(node)
+            continue
         html_file = os.path.join(app.builder.outdir, node)
         with open(html_file,'r',encoding='utf-8') as html:
             lines = html.readlines()
@@ -242,8 +297,9 @@ def write_html(app: Sphinx,exc):
     # Create three json/dicts for direct input in JS
     node_dicts = []
     for i,node in enumerate(node_list):
-        node_dict = {"name":titles[i],
-                     "link":"../"+node}
+        node_dict = {"name":titles[i]}
+        if ".html" in node:
+            node_dict = node_dict | {"link":"../"+node}
         # now check with tag
         if tag_list[i] != "":
             node_dict = node_dict | {"group": tag_list[i]}
@@ -256,20 +312,6 @@ def write_html(app: Sphinx,exc):
                      "target_label" : target_list[i],
                      "target" : titles.index(target_list[i])}
         link_dicts.append(link_dict)
-
-    color_dict = {}
-    unique_tags = []
-    for tag in tag_list:
-        if tag not in unique_tags:
-            if tag != '':
-                unique_tags.append(tag)
-    next_color = 0
-    for tag in unique_tags:
-        if tag in app.config.ref_graph_tag_color:
-            color_dict[tag] = app.config.ref_graph_tag_color[tag]
-        else:
-            color_dict[tag] = FIXED_COLORS[next_color]
-            next_color = (next_color + 1) % len(FIXED_COLORS)
 
     import_html = os.path.join(os.path.dirname(__file__), 'static', "ref_graph.html")
     with open(import_html,'r') as html:

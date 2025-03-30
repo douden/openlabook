@@ -87,7 +87,7 @@ function extractTitle(filename) {
 const visualMargin = maxdim * 0.025;
 
 // Dummy dictionary mapping tag values (in lowercase) to colors.
-<color-line>
+// <color-line>
 
 
 // Utility: Compute an expanded convex hull for a set of nodes given a margin.
@@ -189,7 +189,7 @@ function restoreNodePositions(nodes) {
   // 6) Optionally restore positions
   //    so the sim starts from the latest known state
   // ----------------------------------
-  const hadSavedPositions = restoreNodePositions(nodes);
+  const hadSavedPositions = false; // restoreNodePositions(nodes);
 
   // Create the force simulation
   const simulation = d3.forceSimulation(nodes)
