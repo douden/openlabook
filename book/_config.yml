@@ -106,8 +106,9 @@ sphinx:
     - sphinx_prime_applets
     - sphinx_design
     - sphinx_image_inverter
+    - sphinx_ref_graph
   local_extensions:
     latextable: _ext/
     latexlist: _ext/
     parentheses_list: _ext/
-    ref_graph: _ext/
+    # ref_graph: _ext/

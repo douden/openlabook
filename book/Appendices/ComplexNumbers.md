@@ -4,8 +4,13 @@
 :::
 
 :::{refgraphhidden}
-{doc}`/Chapter1/Vectors`
+{doc}`/Chapter1/Vectors.md`
 {ref}`Sec:LinesAndPlanes`
+{numref}`Sec:DetExtras`
+{prf:ref}`Dfn:DetExtras:VolumeRn`
+:::
+
+:::{refgraphignore}
 :::
 
 ## Introduction
