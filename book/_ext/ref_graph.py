@@ -46,12 +46,25 @@ class RefGraphDirective(SphinxDirective):
         return [graph_node]
     
 class ref_graph(nodes.Admonition, nodes.Element):
-    pass
+
+    def __init__(self, rawsource = "", *children, **attributes):
+        super().__init__(rawsource, *children, **attributes)
+        self.doc = ""
+        self.name = ""
 
 def visit_ref_graph_node(self, node):
     pass
 
 def depart_ref_graph_node(self, node):
+    pass
+
+class ref_graph_tag(nodes.Admonition, nodes.Element):
+    pass
+
+def visit_tag_node(self, node):
+    pass
+
+def depart_tag_node(self, node):
     pass
 
 def setup(app: Sphinx):
@@ -67,17 +80,83 @@ def setup(app: Sphinx):
 
     app.add_directive("refgraph", RefGraphDirective)
 
+    app.add_directive("refgraphtag",RefGraphTagDirective)
+
+    app.add_directive("refgraphhidden",RefGraphHiddenDirective)
+
     app.add_node(ref_graph,
                  html=(visit_ref_graph_node, depart_ref_graph_node),
                  latex=(visit_ref_graph_node, depart_ref_graph_node),
                  text=(visit_ref_graph_node, depart_ref_graph_node))
     
-    app.connect('doctree-resolved', process_ref_nodes)
-    app.connect('build-finished',write_html)
+    app.add_node(ref_graph_tag,
+                 html=(visit_tag_node, depart_tag_node),
+                 latex=(visit_tag_node, depart_tag_node),
+                 text=(visit_tag_node, depart_tag_node))
+    
+    app.connect('doctree-resolved', process_ref_nodes,priority=500)
+    app.connect('doctree-resolved', process_tag_nodes,priority=499)
 
     app.connect('builder-inited',parse_toc)
 
+    app.connect('build-finished',write_html)
+
+
     return {'parallel_write_safe': False}
+
+def process_tag_nodes(app: Sphinx, doctree, fromdocname):
+    # get (additional) tags from nodes)
+    node_list = []
+    tag_list = []
+    for node in doctree.traverse(ref_graph_tag):
+        node_list.append(node.doc+".html")
+        tag_list.append(node.tag)
+
+    if len(node_list)>0:
+        # add them to the node list in the temp file
+        # so first load the file
+        staticdir = os.path.join(app.builder.outdir, '_static')
+        filename = os.path.join(staticdir,app.config.ref_graph_temp_file)
+        with open(filename,'r', encoding="utf-8") as infile:
+            lines = infile.readlines()
+        # split the part of the nodes and the links
+        node_lines = []
+        link_lines = []
+        nodes_done = False
+        for i,line in enumerate(lines):
+            if line == '':
+                continue
+            if i==0:
+                node_lines.append(line)
+                continue
+            if line.strip() == "==== links ====":
+                nodes_done = True
+                link_lines.append(line)
+                continue
+            if nodes_done:
+                link_lines.append(line)
+            else:
+                node_lines.append(line)
+
+        # now check in the node with a tag is already present or not
+        # if present, overrule the value
+        # if not present, add the value
+        for nk,new_node in enumerate(node_list):
+            add = True
+            for ni,node_line in enumerate(node_lines):
+                if new_node in node_line:
+                    node_lines[ni] = f"{new_node} > False > {tag_list[nk]}\n"
+                    add = False
+            if add:
+                node_lines.append(f"{new_node} > False > {tag_list[nk]}\n")
+
+        # now write it again
+        with open(filename,'w', encoding="utf-8") as outfile:
+            outfile.writelines(node_lines)
+        with open(filename,'a', encoding="utf-8") as outfile:
+            outfile.writelines(link_lines)
+
+    pass
 
 def process_ref_nodes(app: Sphinx, doctree, fromdocname):
 
@@ -421,3 +500,30 @@ def parse_toc(app:Sphinx):
                     lastout.write(f"{node[0]}.html -> {ref}.html\n")
     
     pass
+
+class RefGraphTagDirective(SphinxDirective):
+    has_content = False
+    required_arguments = 1
+    optional_arguments = 0
+    final_argument_whitespace = True
+
+    def run(self) -> list[nodes.Node]:
+        tag_node = ref_graph_tag()
+        doc = self.env.docname
+        setattr(tag_node, 'doc', doc)
+        setattr(tag_node, 'tag', self.arguments[0])
+
+        return [tag_node]
+    
+class RefGraphHiddenDirective(SphinxDirective):
+    has_content = True
+    required_arguments = 0
+    optional_arguments = 0
+    
+    def run(self) -> list[nodes.Node]:
+        start_node = nodes.raw(None, "<span hidden>", format="html")
+        inner_nodes = self.parse_content_to_nodes()
+        end_node = nodes.raw(None, "</span>", format="html")
+        node_list = [start_node] + inner_nodes + [end_node]
+
+        return node_list

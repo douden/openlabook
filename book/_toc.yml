@@ -7,7 +7,7 @@ parts:
   - caption:
     numbered: False
     chapters:
-      - file: Introduction.md
+      - file: Introduction.md # ref_graph: {'tag': 'Extra tag'}
   - caption: Main content
     numbered: True
     chapters:
@@ -69,10 +69,10 @@ parts:
   - caption: Appendices
     numbered: True
     chapters:
-      - file: 'Appendices/ComplexNumbers.md' # ref_graph: {'tag': 'Eigenvalues'}
+      - file: 'Appendices/ComplexNumbers.md'
       - file: 'Appendices/InverseMatrixTheorem.md' # ref_graph: {'tag': 'Matrix operations'}
   - caption: Colophon
     numbered: False
     chapters:
       - file: genindex.md # ref_graph: {'ignore':True}
-      - file: 'Colophon/Acknowledgements.md'
+      - file: 'Colophon/Acknowledgements.md' # ref_graph: {'tag': 'Extra tag'}

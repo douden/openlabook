@@ -1,5 +1,13 @@
 # Complex numbers
 
+:::{refgraphtag} Eigenvalues
+:::
+
+:::{refgraphhidden}
+{doc}`/Chapter1/Vectors`
+{ref}`Sec:LinesAndPlanes`
+:::
+
 ## Introduction
 
 Consider the equation

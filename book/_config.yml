@@ -4,7 +4,7 @@ author: me, built with <a href="https://teachbooks.io">TeachBooks</a> and <a hre
 execute:
   execute_notebooks: "off"
 
-only_build_toc_files: true
+only_build_toc_files: false
 
 html:
   baseurl :  "https://douden.github.io/openlabook/" #Replace this with your own URL
