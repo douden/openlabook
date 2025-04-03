@@ -111,4 +111,4 @@ sphinx:
     latextable: _ext/
     latexlist: _ext/
     parentheses_list: _ext/
-    # ref_graph: _ext/
+    def_to_index: _ext/

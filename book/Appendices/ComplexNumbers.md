@@ -4,7 +4,7 @@
 :::
 
 :::{refgraphhidden}
-{doc}`/Chapter1/Vectors.md`
+{doc}`../Chapter1/Vectors.md`
 {ref}`Sec:LinesAndPlanes`
 {numref}`Sec:DetExtras`
 {prf:ref}`Dfn:DetExtras:VolumeRn`
@@ -775,7 +775,7 @@ In particular, we see that the complex number with modulus $r$ and argument $\th
 
 ::::{prf:definition}
 
-The **polar form** of a complex number $z=a+bi$ is defined as
+The __polar form__ of a complex number $z=a+bi$ is defined as
 
 $$
 z = r\bigl(\cos(\theta)+i\sin(\theta)),
