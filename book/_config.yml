@@ -11,7 +11,7 @@ html:
 
 sphinx:
   config:
-    sphinx_proof_index: ['strong','emphasis','literal']
+    # sphinx_proof_index: ['strong','emphasis','literal']
     ref_graph_remove_links: ['Introduction.html -> Colophon/Acknowledgements.html']
     ref_graph_tag_color: {'Eigenvalues':'#900bee','Matrix operations':'#0cd734'}
     # ref_graph_group_nodes: true

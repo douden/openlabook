@@ -3,6 +3,12 @@ from sphinx_proof.proof_type import DefinitionDirective
 import re
 from docutils import nodes
 
+class OldDefinitionDirective(DefinitionDirective):
+    
+    def run(self):
+        self.name = 'prf:definition'
+        return DefinitionDirective.run(self)
+
 class IndexedDefinitionDirective(DefinitionDirective):
 
     def run(self):
@@ -51,5 +57,6 @@ def setup(app: Sphinx):
     app.setup_extension('sphinx_proof')
 
     app.add_directive_to_domain('prf','definition',IndexedDefinitionDirective,override=True)
+    app.add_directive_to_domain('prf','olddefinition',OldDefinitionDirective)
 
     return {}
