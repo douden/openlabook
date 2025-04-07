@@ -4,7 +4,7 @@
 :::
 
 :::{refgraphhidden}
-{doc}`../Chapter1/Vectors.md`
+{doc}`../Chapter1/Vectors`
 {ref}`Sec:LinesAndPlanes`
 {numref}`Sec:DetExtras`
 {prf:ref}`Dfn:DetExtras:VolumeRn`
