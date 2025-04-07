@@ -12,7 +12,10 @@ html:
 sphinx:
   config:
     sphinx_proof_indexed_nodes: ['strong','emphasis','literal']
-    sphinx_proof_skip_indices: ['determinant','\$i\$-th entry','\(main\) diagonal']
+    sphinx_proof_skip_indices: ['\bdet\w*','\$i\$-th entry','\(main\) diagonal']
+    sphinx_proof_lowercase_indices: true
+    sphinx_proof_index_titles: true
+    sphinx_proof_capital_words: ['Dimension']
     ref_graph_remove_links: ['Introduction.html -> Colophon/Acknowledgements.html']
     ref_graph_tag_color: {'Eigenvalues':'#900bee','Matrix operations':'#0cd734'}
     # ref_graph_group_nodes: true
