@@ -45,7 +45,7 @@ We have seen in {numref}`Sec:DetGeometric` how determinants arise in the context
 
 In {numref}`Sec:DotProduct` we used the dot product to define length, distance and orthogonality in $\R^n$. Determinants permit to define the concepts of volume and orientation in $n$ dimensions.
 
-::::::{prf:definition} Theodorus in $\R^n$
+::::::{prf:definition} Volume in $\R^n$
 :label: Dfn:DetExtras:VolumeRn
 
 Let $\{\vect{v_1}, \ldots, \vect{v}_n\}$ be a set of $n$ vectors in $\R^n$.

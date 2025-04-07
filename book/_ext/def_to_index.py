@@ -5,7 +5,9 @@ from docutils import nodes
 
 SUPPORTED_NODES = ['strong','emphasis','literal']
 DEFAULT_NODES = ['strong','emphasis']
-CAPITAL_WORDS = list({'Cartesian','Markov','Euler'})
+CAPITAL_WORDS = list({'Cartesian','Markov','Euler','Neumann','Newton','Gauss','Lagrange','Hilbert','Frobenius','Navier','Stokes','Laplace','Cauchy','Erdős','Ramanujan',
+                      'Kolmogorov','Darcy','Archimedes','Chebychev','Castigliano','Taylor','Maclaurin','Macaulay','Mohr','Jensens','Muller','Breslau','Bernoulli',
+                      'Maxwell','Einstein','Froud','Reynolds','Betti','Rayleigh','Ohm','Volt','Ampère','Tesla','Curie','Turing','Murphy','Avogrado','Planck'})
 
 class IndexedDefinitionDirective(DefinitionDirective):
 
@@ -21,20 +23,20 @@ class IndexedDefinitionDirective(DefinitionDirective):
         # now find all strong and emphasis node
         stuff_to_index = set()
         # find out if a title has been set (and has to be indexed)
-        if self.env.config.sphinx_proof_index_titles:
+        if self.env.config.sphinx_indexed_defs_index_titles:
             if len(self.arguments) != 0:
                 title = self.arguments[0]
-                if self.env.config.sphinx_proof_lowercase_indices:
+                if self.env.config.sphinx_indexed_defs_lowercase_indices:
                     new_string = title.lower()
                     new_math = re.findall(r"\$(.*?)\$", new_string)
                     old_math = re.findall(r"\$(.*?)\$", title)
                     for eeeee,mathe in enumerate(new_math):
                         new_string = new_string.replace(f"${mathe}$",f"${old_math[eeeee]}$")
-                    for word in self.env.config.sphinx_proof_capital_words:
+                    for word in self.env.config.sphinx_indexed_defs_capital_words:
                         new_string = new_string.replace(f"{word.lower()}",f"{word}")
                     title = new_string
                 stuff_to_index.add(title)
-        for typ in self.env.config.sphinx_proof_indexed_nodes:
+        for typ in self.env.config.sphinx_indexed_defs_indexed_nodes:
             assert typ in SUPPORTED_NODES, f"the node {typ} is not supported"
             list_of_nodes = def_nodes[0][1]
             for def_node in list_of_nodes:
@@ -47,13 +49,13 @@ class IndexedDefinitionDirective(DefinitionDirective):
                     node_string = node_string.replace(f"<{typ}/>","")
                     node_string = node_string.replace("<math>","$")
                     node_string = node_string.replace("</math>","$")
-                    if self.env.config.sphinx_proof_lowercase_indices:
+                    if self.env.config.sphinx_indexed_defs_lowercase_indices:
                         new_string = node_string.lower()
                         new_math = re.findall(r"\$(.*?)\$", new_string)
                         old_math = re.findall(r"\$(.*?)\$", node_string)
                         for eeeee,mathe in enumerate(new_math):
                             new_string = new_string.replace(f"${mathe}$",f"${old_math[eeeee]}$")
-                        for word in self.env.config.sphinx_proof_capital_words:
+                        for word in self.env.config.sphinx_indexed_defs_capital_words:
                             new_string = new_string.replace(f"{word.lower()}",f"{word}")
                         node_string = new_string
 
@@ -61,7 +63,7 @@ class IndexedDefinitionDirective(DefinitionDirective):
                     skip_index = False
                     if node_string == "":
                         continue
-                    for regexp in self.env.config.sphinx_proof_skip_indices:
+                    for regexp in self.env.config.sphinx_indexed_defs_skip_indices:
                         if re.search(regexp,node_string):
                             skip_index = True
                             break
@@ -86,11 +88,11 @@ class IndexedDefinitionDirective(DefinitionDirective):
 
 def setup(app: Sphinx):
 
-    app.add_config_value('sphinx_proof_indexed_nodes',DEFAULT_NODES,'env')
-    app.add_config_value('sphinx_proof_skip_indices',[],'env')
-    app.add_config_value('sphinx_proof_lowercase_indices',True,'env')
-    app.add_config_value('sphinx_proof_index_titles',True,'env')
-    app.add_config_value('sphinx_proof_capital_words',[],'env')
+    app.add_config_value('sphinx_indexed_defs_indexed_nodes',DEFAULT_NODES,'env')
+    app.add_config_value('sphinx_indexed_defs_skip_indices',[],'env')
+    app.add_config_value('sphinx_indexed_defs_lowercase_indices',True,'env')
+    app.add_config_value('sphinx_indexed_defs_index_titles',True,'env')
+    app.add_config_value('sphinx_indexed_defs_capital_words',[],'env')
 
     app.connect('config-inited',parse_config)
 
@@ -102,7 +104,7 @@ def setup(app: Sphinx):
 
 def parse_config(app:Sphinx,config):
     
-    capital_words = app.config.sphinx_proof_capital_words + CAPITAL_WORDS
-    app.config.sphinx_proof_capital_words = list(set(capital_words))
+    capital_words = app.config.sphinx_indexed_defs_capital_words + CAPITAL_WORDS
+    app.config.sphinx_indexed_defs_capital_words = list(set(capital_words))
 
     pass

@@ -1041,7 +1041,6 @@ Show that **any** set of two independent vectors in the plane $\mathcal P$ gener
 ## Dimension of a Subspace
 
 ::::::{prf:definition} Dimension
-<!-- :class: skipindexing -->
 
 The **dimension** of a subspace $S$ is the number of elements in a
 (i.e., any) basis for $S$. &nbsp; Notation: &nbsp; dim $S$.
