@@ -112,8 +112,8 @@ sphinx:
     - sphinx_design
     - sphinx_image_inverter
     - sphinx_ref_graph
+    - sphinx_indexed_definitions
   local_extensions:
     latextable: _ext/
     latexlist: _ext/
     parentheses_list: _ext/
-    def_to_index: _ext/
