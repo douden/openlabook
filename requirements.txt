@@ -1,6 +1,5 @@
 # first list the packages you wish to download from PyPI
 jupyterbook-patches
-teachbooks # depends on jupyter-book
 sphinx-image-inverter
 download_link_replacer
 sphinx-exercise
@@ -20,3 +19,5 @@ scikit-learn
 git+https://github.com/TeachBooks/Sphinx-Thebe
 git+https://github.com/TeachBooks/Sphinx-ref-graph.git # bump
 git+https://github.com/TeachBooks/Sphinx-Indexed-Definitions.git
+
+teachbooks # depends on jupyter-book
