@@ -618,7 +618,7 @@ This example illustrates the existence of a _unit element_ with respect to the m
 
 An $n\times n $ matrix $A$ is called a **square matrix**. So it is a matrix where the number of columns is equal to the number of rows.
 
-For a square matrix $A$ we call the elements $a_{ii}$ the **diagonal elements**. Together the diagonal elements form the **(main) diagonal** of $A$.
+For a square matrix $A$ we call the elements $a_{ii}$ the **diagonal elements**. Together the diagonal elements form the **(main diagonal** of $A$.
 
 A square matrix where all non-diagonal elements are equal to 0 is called a **diagonal matrix**.
 

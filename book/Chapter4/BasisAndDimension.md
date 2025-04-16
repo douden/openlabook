@@ -970,7 +970,7 @@ $$
 .
 $$
 
-By taking $x_2$ and $x_3$ as free variables we find that the general solution of this linear system (of one equation in three unknowns) is given by
+By taking $x_2$ and $x_3$ as free variables we find that the {index}`general solution` of this linear system (of one equation in three unknowns) is given by
 
 $$
 \left\lbrace

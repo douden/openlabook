@@ -261,7 +261,7 @@ $$
 
 is indeed a solution of the given equation.
 
-However, this is not the only way to write down the general solution: in this example almost any set of four variables can act as free variables. The descriptions
+However, this is not the only way to write down the {index}`general solution`: in this example almost any set of four variables can act as free variables. The descriptions
 
 $$
 
@@ -287,7 +287,7 @@ are just as good. You might want to avoid fractions though. The only set of four
 
 ::::
 
-The idea behind all methods to find the general solution of a linear system: rewrite the system in simpler forms, basically by eliminating variables from equations.
+The idea behind all methods to find the {index}`general solution` of a linear system: rewrite the system in simpler forms, basically by eliminating variables from equations.
 We illustrate this by an example.
 
 ::::{prf:example}
