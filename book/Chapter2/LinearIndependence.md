@@ -278,7 +278,7 @@ This implies $\mathbf{v}_{i}$ is in $\Span{\mathbf{v}_{1},...,\mathbf{v}_{i-1},\
 
 ::::::
 
-::::::{prf:corollary}
+::::::{prf:corollary} Test title
 :label: Cor:LinInd:LinIndisColwithoutPivot
 
 A set
