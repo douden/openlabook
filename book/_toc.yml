@@ -7,7 +7,8 @@ parts:
   - caption:
     numbered: False
     chapters:
-      - file: Introduction.md # ref_graph: {'tag': 'Extra tag'}
+      - file: Introduction.md # ref_graph: {'ignore':True}
+      - file: GoC.md # ref_graph: {'ignore':True}
   - caption: Main content
     numbered: True
     chapters:
@@ -75,4 +76,4 @@ parts:
     numbered: False
     chapters:
       - file: genindex.md # ref_graph: {'ignore':True}
-      - file: 'Colophon/Acknowledgements.md' # ref_graph: {'tag': 'Extra tag'}
+      - file: 'Colophon/Acknowledgements.md' # ref_graph: {'ignore':True}

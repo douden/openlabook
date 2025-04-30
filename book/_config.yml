@@ -11,13 +11,9 @@ html:
 
 sphinx:
   config:
-    sphinx_indexed_defs_indexed_nodes: ['strong']
+    sphinx_indexed_defs_indexed_nodes: ['strong','emphasis','literal']
     ref_graph_remove_links: ['Introduction.html -> Colophon/Acknowledgements.html']
     ref_graph_tag_color: {'Eigenvalues':'#900bee','Matrix operations':'#0cd734'}
-    ref_graph_group_nodes: true
-    # ref_graph_internal_links: true
-    ref_graph_collapse_group: true
-    # ref_graph_toc_links: true
     numfig_secnum_depth: 2
     html_static_path:
     - _static
