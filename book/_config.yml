@@ -23,7 +23,6 @@ sphinx:
       use_thebe_lite: true
       exclude_patterns: ["**/_*.yml", "**/*.md", "**/*.ipynb"]
     html_theme_options:
-      announcement : 'This book is an adapted copy of <a href="https://doi.org/10.59490/tb.88">Linear Algebra</a>.<br>This banner shows up in all browsers.'
       logo:
         text: Linear Algebra (private)
       repository_url: "https://github.com/douden/openlabook" #add your own repo URL here
@@ -66,7 +65,8 @@ sphinx:
             \newcommand{\CoBmatrix}[2]{P_{{\mathcal #2}\leftarrow{\mathcal #1}}}
             \usepackage{tabularx}
             \usepackage{threeparttable}
-    mathjax3_config: 
+    mathjax_path: 'select_mathjax.js'
+    mathjax3_config:
       tex:
         inlineMath: [ ['$','$'], ['\(','\)'] ]
         displayMath: [ ['$$','$$'], ['\[','\]'] ]
