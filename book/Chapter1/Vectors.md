@@ -348,7 +348,6 @@ $$
 ## Grasple Exercises
 
 ::::{grasple}
-:class: fullscreenable
 :url: https://embed.grasple.com/exercises/670148b0-07cb-4f0c-861f-0ac6fbc83fb2?id=70141
 :label: grasple_exercise_1_1_3
 :dropdown:
