@@ -8,7 +8,7 @@ sphinx-tudelft-theme == 1.1.5
 teachbooks-sphinx-tippy == 1.0.9
 sphinx-iframes == 1.0.5
 sphinx-proof == 0.2.1
-teachbooks-sphinx-grasple == 1.1.0
+teachbooks-sphinx-grasple == 1.1.1
 sphinx-prime-applets == 1.0.2
 TexSoup == 0.3.1
 roman == 5.0
