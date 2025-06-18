@@ -1,7 +1,7 @@
 # first list the packages you wish to download from PyPI
 teachbooks == 0.2.1 # depends on jupyter-book
 jupyterbook-patches == 1.6.2
-sphinx-image-inverter == 1.1.3
+sphinx-image-inverter == 1.1.2
 download_link_replacer == 1.0.4
 sphinx-exercise == 1.0.1
 sphinx-tudelft-theme == 1.1.5
@@ -13,10 +13,8 @@ sphinx-prime-applets == 1.0.2
 TexSoup == 0.3.1
 roman == 5.0
 sphinx-named-colors == 1.0.1
-sphinx-indexed-definitions == 1.0.3
-sphinx-ref-graph == 1.0.1
+sphinx-indexed-definitions == 1.0.1
+sphinx-ref-graph == 1.0.0
 
 # Now list the packages you want to download directly from GitHub
 git+https://github.com/TeachBooks/Sphinx-Thebe
---extra-index-url https://test.pypi.org/simple/
-teachbooks_software_project_extension_name==0.1.3

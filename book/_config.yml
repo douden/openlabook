@@ -105,7 +105,6 @@ sphinx:
     - sphinx_image_inverter
     - sphinx_ref_graph
     - sphinx_indexed_definitions
-    - teachbooks_software_project_extension_name
   local_extensions:
     latextable: _ext/
     latexlist: _ext/
