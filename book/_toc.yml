@@ -18,62 +18,62 @@ parts:
           - file: 'Chapter1/Inner_Product.md' # ref_graph: {'tag': 'Vectors, Lines and Planes'}
           - file: 'Chapter1/Cross_Product.md' # ref_graph: {'tag': 'Vectors, Lines and Planes'}
           - file: 'Chapter1/Lines_and_Planes.md' # ref_graph: {'tag': 'Vectors, Lines and Planes'}
-      - file: 'Chapter2/intro.md' # ref_graph: {'ignore':True}
-        sections:
-          - file: 'Chapter2/LinearSystems.md'  # ref_graph: {'tag': 'Systems'}
-          - file: 'Chapter2/LinearCombinations.md' # ref_graph: {'tag': 'Systems'}
-          - file: 'Chapter2/SolutionSets.md' # ref_graph: {'tag': 'Systems'}
-          - file: 'Chapter2/MatrixVectorProduct.md'  # ref_graph: {'tag': 'Systems'}
-          - file: 'Chapter2/LinearIndependence.md'  # ref_graph: {'tag': 'Systems'}
-      - file: 'Chapter3/intro.md'  # ref_graph: {'ignore':True}
-        sections:
-          - file: 'Chapter3/Linear_Transformations.md' # ref_graph: {'tag': 'Matrix operations'}
-          - file: 'Chapter3/MatrixOperations.md' # ref_graph: {'tag': 'Matrix operations'}
-          - file: 'Chapter3/GeometryofLinearTransformations.md' # ref_graph: {'tag': 'Matrix operations'}
-          - file: 'Chapter3/MatrixInverse.md' # ref_graph: {'tag': 'Matrix operations'}
-          - file: 'Chapter3/Injectivity_and_surjectivity.md' # ref_graph: {'tag': 'Matrix operations'}
-          - file: 'Chapter3/LUdecomp.md' # ref_graph: {'tag': 'Matrix operations'}
-      - file: 'Chapter4/intro.md' # ref_graph: {'ignore':True}
-        sections:
-          - file: 'Chapter4/Subspaces_of_Rn.md' # ref_graph: {'tag': 'Matrix operations'}
-          - file: 'Chapter4/BasisAndDimension.md' # ref_graph: {'tag': 'Matrix operations'}
-          - file: 'Chapter4/ChangeOfBasis.md' # ref_graph: {'tag': 'Matrix operations'}
-      - file: 'Chapter5/intro.md' # ref_graph: {'ignore':True}
-        sections:
-          - file: 'Chapter5/DeterminantsGeometric.md' # ref_graph: {'tag': 'Determinants'}
-          - file: 'Chapter5/DeterminantsViaCofactors.md' # ref_graph: {'tag': 'Determinants'}
-          - file: 'Chapter5/DeterminantsViaRowReduction.md' # ref_graph: {'tag': 'Determinants'}
-          - file: 'Chapter5/DeterminantsExtras.md' # ref_graph: {'tag': 'Determinants'}
-      - file: 'Chapter6/intro.md' # ref_graph: {'ignore':True}
-        sections:
-          - file: 'Chapter6/EigenvaluesEigenvectors.md' # ref_graph: {'tag': 'Eigenvalues'}
-          - file: 'Chapter6/CharPolynomial.md' # ref_graph: {'tag': 'Eigenvalues'}
-          - file: 'Chapter6/Diagonalizability.md' # ref_graph: {'tag': 'Eigenvalues'}
-          - file: 'Chapter6/ComplexEigenvalues.md' # ref_graph: {'tag': 'Eigenvalues', 'refs':['Appendices/ComplexNumbers.md']}
-      - file: 'Chapter7/intro.md' # ref_graph: {'ignore':True}
-        sections:
-          - file: 'Chapter7/OrthoComp.md' # ref_graph: {'tag': 'Orthogonality'}
-          - file: 'Chapter7/OrthoBase.md' # ref_graph: {'tag': 'Orthogonality'}
-          - file: 'Chapter7/GramSchmidt.md' # ref_graph: {'tag': 'Orthogonality'}
-          - file: 'Chapter7/LeastSquares.md' # ref_graph: {'tag': 'Orthogonality'}
-      - file: 'Chapter8/intro.md' # ref_graph: {'ignore':True}
-        sections:
-          - file: 'Chapter8/SymmetricMatrices.md' # ref_graph: {'tag': 'Symmetry'}
-          - file: 'Chapter8/QuadraticForms.md' # ref_graph: {'tag': 'Symmetry'}
-          - file: 'Chapter8/SingularValueDecomp.md' # ref_graph: {'tag': 'Symmetry'}
-      - file: 'Chapter9/intro.md' # ref_graph: {'ignore':True}
-        sections:
-          - file: 'Chapter9/DynSystDiscrete.md' # ref_graph: {'tag': 'Dynamical systems'}
-          - file: 'Chapter9/MarkovChains.md' # ref_graph: {'tag': 'Dynamical systems', 'refs': ['Chapter9/DynSystDiscrete.md']}
-          - file: 'Chapter9/PowerMethod.md' # ref_graph: {'tag': 'Dynamical systems'}
-          - file: 'Chapter9/DynSystContinuous.md' # ref_graph: {'tag': 'Dynamical systems'}
-  - caption: Appendices
-    numbered: True
-    chapters:
-      - file: 'Appendices/ComplexNumbers.md'
-      - file: 'Appendices/InverseMatrixTheorem.md' # ref_graph: {'tag': 'Matrix operations'}
-  - caption: Colophon
-    numbered: False
-    chapters:
-      - file: genindex.md # ref_graph: {'ignore':True}
-      - file: 'Colophon/Acknowledgements.md' # ref_graph: {'ignore':True}
+#       - file: 'Chapter2/intro.md' # ref_graph: {'ignore':True}
+#         sections:
+#           - file: 'Chapter2/LinearSystems.md'  # ref_graph: {'tag': 'Systems'}
+#           - file: 'Chapter2/LinearCombinations.md' # ref_graph: {'tag': 'Systems'}
+#           - file: 'Chapter2/SolutionSets.md' # ref_graph: {'tag': 'Systems'}
+#           - file: 'Chapter2/MatrixVectorProduct.md'  # ref_graph: {'tag': 'Systems'}
+#           - file: 'Chapter2/LinearIndependence.md'  # ref_graph: {'tag': 'Systems'}
+#       - file: 'Chapter3/intro.md'  # ref_graph: {'ignore':True}
+#         sections:
+#           - file: 'Chapter3/Linear_Transformations.md' # ref_graph: {'tag': 'Matrix operations'}
+#           - file: 'Chapter3/MatrixOperations.md' # ref_graph: {'tag': 'Matrix operations'}
+#           - file: 'Chapter3/GeometryofLinearTransformations.md' # ref_graph: {'tag': 'Matrix operations'}
+#           - file: 'Chapter3/MatrixInverse.md' # ref_graph: {'tag': 'Matrix operations'}
+#           - file: 'Chapter3/Injectivity_and_surjectivity.md' # ref_graph: {'tag': 'Matrix operations'}
+#           - file: 'Chapter3/LUdecomp.md' # ref_graph: {'tag': 'Matrix operations'}
+#       - file: 'Chapter4/intro.md' # ref_graph: {'ignore':True}
+#         sections:
+#           - file: 'Chapter4/Subspaces_of_Rn.md' # ref_graph: {'tag': 'Matrix operations'}
+#           - file: 'Chapter4/BasisAndDimension.md' # ref_graph: {'tag': 'Matrix operations'}
+#           - file: 'Chapter4/ChangeOfBasis.md' # ref_graph: {'tag': 'Matrix operations'}
+#       - file: 'Chapter5/intro.md' # ref_graph: {'ignore':True}
+#         sections:
+#           - file: 'Chapter5/DeterminantsGeometric.md' # ref_graph: {'tag': 'Determinants'}
+#           - file: 'Chapter5/DeterminantsViaCofactors.md' # ref_graph: {'tag': 'Determinants'}
+#           - file: 'Chapter5/DeterminantsViaRowReduction.md' # ref_graph: {'tag': 'Determinants'}
+#           - file: 'Chapter5/DeterminantsExtras.md' # ref_graph: {'tag': 'Determinants'}
+#       - file: 'Chapter6/intro.md' # ref_graph: {'ignore':True}
+#         sections:
+#           - file: 'Chapter6/EigenvaluesEigenvectors.md' # ref_graph: {'tag': 'Eigenvalues'}
+#           - file: 'Chapter6/CharPolynomial.md' # ref_graph: {'tag': 'Eigenvalues'}
+#           - file: 'Chapter6/Diagonalizability.md' # ref_graph: {'tag': 'Eigenvalues'}
+#           - file: 'Chapter6/ComplexEigenvalues.md' # ref_graph: {'tag': 'Eigenvalues', 'refs':['Appendices/ComplexNumbers.md']}
+#       - file: 'Chapter7/intro.md' # ref_graph: {'ignore':True}
+#         sections:
+#           - file: 'Chapter7/OrthoComp.md' # ref_graph: {'tag': 'Orthogonality'}
+#           - file: 'Chapter7/OrthoBase.md' # ref_graph: {'tag': 'Orthogonality'}
+#           - file: 'Chapter7/GramSchmidt.md' # ref_graph: {'tag': 'Orthogonality'}
+#           - file: 'Chapter7/LeastSquares.md' # ref_graph: {'tag': 'Orthogonality'}
+#       - file: 'Chapter8/intro.md' # ref_graph: {'ignore':True}
+#         sections:
+#           - file: 'Chapter8/SymmetricMatrices.md' # ref_graph: {'tag': 'Symmetry'}
+#           - file: 'Chapter8/QuadraticForms.md' # ref_graph: {'tag': 'Symmetry'}
+#           - file: 'Chapter8/SingularValueDecomp.md' # ref_graph: {'tag': 'Symmetry'}
+#       - file: 'Chapter9/intro.md' # ref_graph: {'ignore':True}
+#         sections:
+#           - file: 'Chapter9/DynSystDiscrete.md' # ref_graph: {'tag': 'Dynamical systems'}
+#           - file: 'Chapter9/MarkovChains.md' # ref_graph: {'tag': 'Dynamical systems', 'refs': ['Chapter9/DynSystDiscrete.md']}
+#           - file: 'Chapter9/PowerMethod.md' # ref_graph: {'tag': 'Dynamical systems'}
+#           - file: 'Chapter9/DynSystContinuous.md' # ref_graph: {'tag': 'Dynamical systems'}
+#   - caption: Appendices
+#     numbered: True
+#     chapters:
+#       - file: 'Appendices/ComplexNumbers.md'
+#       - file: 'Appendices/InverseMatrixTheorem.md' # ref_graph: {'tag': 'Matrix operations'}
+#   - caption: Colophon
+#     numbered: False
+#     chapters:
+#       - file: genindex.md # ref_graph: {'ignore':True}
+#       - file: 'Colophon/Acknowledgements.md' # ref_graph: {'ignore':True}
