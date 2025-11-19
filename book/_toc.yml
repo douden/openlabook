@@ -1,15 +1,16 @@
 # In _toc.yml
 format: jb-book
-root: include_README.md # ref_graph: {'ignore':True}
+root: index.md # ref_graph: {'ignore':True}
 options:
   numbered: true
 parts:
   - caption:
     numbered: False
     chapters:
-      - file: include_README_also.rst # ref_graph: {'ignore':True}
+      - file: MarkdownFile.md # ref_graph: {'ignore':True}
       - file: Notebook.ipynb # ref_graph: {'ignore':True}
-      - file: Introduction.md # ref_graph: {'ignore':True}
+      - file: reStructuredTextFile.rst # ref_graph: {'ignore':True}
+      # - file: Introduction.md # ref_graph: {'ignore':True}
       # - file: GoC.md # ref_graph: {'ignore':True}
   - caption: Main content
     numbered: True

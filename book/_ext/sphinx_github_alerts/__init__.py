@@ -100,7 +100,7 @@ def convert_github_alerts(app, docname, source):
     # replace all blocks in content with new_blocks
     for match, new_block in zip(re.finditer(pattern, content, re.MULTILINE), new_blocks):
         content = content.replace(match.group(0), new_block)
-
+    
     source[0] = content
     pass
 
