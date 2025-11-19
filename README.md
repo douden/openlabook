@@ -25,22 +25,22 @@
 
 ## Lowercase calls
 
-> [!NOTE]
+> [!note]
 > **Bold**
 > 
 > Useful information that users should know, even when skimming content.
 
-> [!TIP]
+> [!tip]
 > Helpful advice for doing things better or more easily.
 
-> [!IMPORTANT]
+> [!important]
 > Key information users need to know to achieve their goal.
 
-> [!WARNING]
+> [!warning]
 >
 > Urgent info that needs immediate user attention to avoid problems.
 
-> [!CAUTION]
+> [!caution]
 > Advises about risks or negative outcomes of certain actions.
 
 
