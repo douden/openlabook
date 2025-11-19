@@ -1,17 +1,13 @@
-# Private Linear Algebra book
+# Markdown file
 
-## Full capital calls
+## Note
 
-$$
-\begin{array}{cc}
-  \cancel{x+1} & \bcancel{x+1}\\
-  \xcancel{x+1} & \cancelto{0}{x+1}
-  \end{array}
-$$
+```md
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+```
 
-> [!NOTE] Test
-> **Bold**
-> 
+> [!NOTE]
 > Useful information that users should know, even when skimming content.
 
 > [!TIP]
@@ -25,80 +21,9 @@ $$
 
 > [!CAUTION]
 > Advises about risks or negative outcomes of certain actions.
-
-
-> [!OEPS]
-> Advises about risks or negative outcomes of certain actions.
-
-## Full lowercase calls
-
-> [!note]
-> **Bold**
 > 
-> Useful information that users should know, even when skimming content.
-
-> [!tip]
-> Helpful advice for doing things better or more easily.
-
-> [!important]
-> Key information users need to know to achieve their goal.
-
-> [!warning]
->
-> Urgent info that needs immediate user attention to avoid problems.
-
-> [!caution]
-> Advises about risks or negative outcomes of certain actions.
+> But multiline alerts can also be used.
 
 
-> [!oeps]
-> Advises about risks or negative outcomes of certain actions.
-
-
-## Lowercase with capital first letter calls
-
-> [!Note]
-> **Bold**
-> 
-> Useful information that users should know, even when skimming content.
-
-> [!Tip]
-> Helpful advice for doing things better or more easily.
-
-> [!Important]
-> Key information users need to know to achieve their goal.
-
-> [!Warning]
->
-> Urgent info that needs immediate user attention to avoid problems.
-
-> [!Caution]
-> Advises about risks or negative outcomes of certain actions.
-
-
-> [!Oeps]
-> Advises about risks or negative outcomes of certain actions.
-
-## Lowercase with capital random letter calls
-
-> [!Note]
-> **Bold**
-> 
-> Useful information that users should know, even when skimming content.
-
-> [!TIp]
-> Helpful advice for doing things better or more easily.
-
-> [!ImporTant]
-> Key information users need to know to achieve their goal.
-
-> [!waRning]
->
-> Urgent info that needs immediate user attention to avoid problems.
-
-> [!CautioN]
-> Advises about risks or negative outcomes of certain actions.
-
-
-> [!Oeps]
-> Advises about risks or negative outcomes of certain actions.
+> [!UNRECOGNISED]
+> This is an unrecognised alert type.
