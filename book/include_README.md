@@ -9,7 +9,7 @@ $$
   \end{array}
 $$
 
-> [!NOTE]
+> [!NOTE] Test
 > **Bold**
 > 
 > Useful information that users should know, even when skimming content.

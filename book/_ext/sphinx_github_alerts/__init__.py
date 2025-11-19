@@ -1,6 +1,8 @@
 import re
 
 from sphinx.util import logging
+from sphinx.errors import ConfigError
+
 logger = logging.getLogger(__name__)
 
 RECOGNISED_TYPES = {
@@ -10,6 +12,16 @@ RECOGNISED_TYPES = {
     'warning': 'warning',
     'caution': 'caution',
 }
+
+def validate_sphinx_github_alerts_config(app, config):
+    """Validate sphinx_github_alerts_redirects config."""
+    redirects = getattr(config, 'sphinx_github_alerts_redirects', {})
+    if not isinstance(redirects, dict):
+        raise ConfigError("sphinx_github_alerts_redirects must be a dict.")
+    invalid = set(redirects.keys()) - set(RECOGNISED_TYPES.keys())
+    if invalid:
+        raise ConfigError(f"sphinx_github_alerts_redirects has invalid keys: {sorted(invalid)}. "
+                          f"Allowed keys: {sorted(RECOGNISED_TYPES.keys())}")
 
 def convert_github_alerts(app, docname, source):
     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
@@ -46,7 +58,7 @@ def convert_github_alerts(app, docname, source):
     matches = re.finditer(pattern, content, re.MULTILINE)
     new_blocks = []
 
-    EXTENDED_TYPES = RECOGNISED_TYPES.copy() | app.env.config.sphinx_github_alerts_extra    
+    EXTENDED_TYPES = RECOGNISED_TYPES.copy() | app.env.config.sphinx_github_alerts_redirects    
     for i,match in enumerate(matches):
         block = match.group(0)
         # Process each block here
@@ -69,8 +81,6 @@ def convert_github_alerts(app, docname, source):
                         replacement = f"\n\"```{{{EXTENDED_TYPES[type_match]}}}\\n\",\n{stripped_block}\n\"```\\n\""
                     else:
                         replacement = f"\n\"```{{{EXTENDED_TYPES[type_match]}}}\\n\",\n{stripped_block}\n\"```\\n\",\n"
-                    
-                    logger.info(f"Converted GitHub alert\n{block}\nto Sphinx admonition\n{replacement}",color="yellow")
                 elif source_file.endswith('.rst'):
                     replacement = f"\n.. {EXTENDED_TYPES[type_match]}:: \n\n"
                     # indent each line of stripped_block by 4 spaces
@@ -92,16 +102,12 @@ def convert_github_alerts(app, docname, source):
         content = content.replace(match.group(0), new_block)
 
     source[0] = content
-
-    print("Finished converting GitHub alerts in:", docname)
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
     pass
 
 def setup(app):
 
-    app.add_config_value('sphinx_github_alerts_extra', {}, 'env')
-
+    app.add_config_value('sphinx_github_alerts_redirects', {}, 'env')
+    app.connect('config-inited', validate_sphinx_github_alerts_config)
     app.connect('source-read', convert_github_alerts)
     
     return {
