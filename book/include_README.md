@@ -2,9 +2,6 @@
 
 ## Full capital calls
 
-> [!attention]
-> Is this one correct?
-
 > [!NOTE]
 > **Bold**
 > 
