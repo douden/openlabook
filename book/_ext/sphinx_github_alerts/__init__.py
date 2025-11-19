@@ -3,7 +3,7 @@ def convert_github_alerts(app, docname, source):
 
     # Find any line starting with '> ![type] and replace it
     # with the appropriate admonition syntax for Sphinx.'
-    # type can be 
+    # type can only be one of 'note', 'tip', 'important', 'warning', 'caution', etc.
     return
 
 def setup(app):

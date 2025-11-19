@@ -1,6 +1,6 @@
 # Private Linear Algebra book
 
-## CAPITAL calls
+## Full capital calls
 
 > [!NOTE]
 > **Bold**
@@ -23,7 +23,7 @@
 > [!OEPS]
 > Advises about risks or negative outcomes of certain actions.
 
-## Lowercase calls
+## Full lowercase calls
 
 > [!note]
 > **Bold**
@@ -44,5 +44,30 @@
 > Advises about risks or negative outcomes of certain actions.
 
 
-> [!OEPS]
+> [!oeps]
+> Advises about risks or negative outcomes of certain actions.
+
+
+## Lowercase with capital first letter calls
+
+> [!Note]
+> **Bold**
+> 
+> Useful information that users should know, even when skimming content.
+
+> [!Tip]
+> Helpful advice for doing things better or more easily.
+
+> [!Important]
+> Key information users need to know to achieve their goal.
+
+> [!Warning]
+>
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!Caution]
+> Advises about risks or negative outcomes of certain actions.
+
+
+> [!Oeps]
 > Advises about risks or negative outcomes of certain actions.
