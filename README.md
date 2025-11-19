@@ -71,3 +71,27 @@
 
 > [!Oeps]
 > Advises about risks or negative outcomes of certain actions.
+
+## Lowercase with capital random letter calls
+
+> [!Note]
+> **Bold**
+> 
+> Useful information that users should know, even when skimming content.
+
+> [!TIp]
+> Helpful advice for doing things better or more easily.
+
+> [!ImporTant]
+> Key information users need to know to achieve their goal.
+
+> [!waRning]
+>
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!CautioN]
+> Advises about risks or negative outcomes of certain actions.
+
+
+> [!Oeps]
+> Advises about risks or negative outcomes of certain actions.
