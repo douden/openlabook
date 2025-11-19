@@ -1,13 +1,8 @@
-# Private Linear Algebra book
+Title Goes Here
+===============
 
 ## Full capital calls
 
-$$
-\begin{array}{cc}
-  \cancel{x+1} & \bcancel{x+1}\\
-  \xcancel{x+1} & \cancelto{0}{x+1}
-  \end{array}
-$$
 
 > [!NOTE]
 > **Bold**
@@ -30,7 +25,8 @@ $$
 > [!OEPS]
 > Advises about risks or negative outcomes of certain actions.
 
-## Full lowercase calls
+Full lowercase calls
+----------------------
 
 > [!note]
 > **Bold**
@@ -55,7 +51,8 @@ $$
 > Advises about risks or negative outcomes of certain actions.
 
 
-## Lowercase with capital first letter calls
+Lowercase with capital first letter calls
+----------------------
 
 > [!Note]
 > **Bold**
@@ -73,30 +70,6 @@ $$
 > Urgent info that needs immediate user attention to avoid problems.
 
 > [!Caution]
-> Advises about risks or negative outcomes of certain actions.
-
-
-> [!Oeps]
-> Advises about risks or negative outcomes of certain actions.
-
-## Lowercase with capital random letter calls
-
-> [!Note]
-> **Bold**
-> 
-> Useful information that users should know, even when skimming content.
-
-> [!TIp]
-> Helpful advice for doing things better or more easily.
-
-> [!ImporTant]
-> Key information users need to know to achieve their goal.
-
-> [!waRning]
->
-> Urgent info that needs immediate user attention to avoid problems.
-
-> [!CautioN]
 > Advises about risks or negative outcomes of certain actions.
 
 

@@ -11,6 +11,8 @@ html:
 
 sphinx:
   config:
+    sphinx_github_alerts_extra :
+      oeps: 'prf:example'
     sphinx_indexed_defs_indexed_nodes: ['strong','emphasis','literal']
     ref_graph_remove_links: ['Introduction.html -> Colophon/Acknowledgements.html']
     ref_graph_tag_color: {'Eigenvalues':'#900bee','Matrix operations':'#0cd734'}
@@ -66,7 +68,11 @@ sphinx:
             \usepackage{tabularx}
             \usepackage{threeparttable}
     mathjax3_config:
+      loader:
+        load: ['[tex]/cancel']
       tex:
+        packages:
+          '[+]': ['cancel']
         inlineMath: [ ['$','$'], ['\(','\)'] ]
         displayMath: [ ['$$','$$'], ['\[','\]'] ]
         macros:
@@ -97,7 +103,7 @@ sphinx:
     - sphinx_exercise
     - teachbooks_sphinx_grasple
     - sphinx.ext.imgconverter
-    - sphinx_tudelft_theme
+    # - sphinx_tudelft_theme
     - teachbooks_sphinx_tippy
     - jupyterbook_patches
     - sphinx_prime_applets

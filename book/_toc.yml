@@ -7,6 +7,8 @@ parts:
   - caption:
     numbered: False
     chapters:
+      - file: include_README_also.rst # ref_graph: {'ignore':True}
+      - file: Notebook.ipynb # ref_graph: {'ignore':True}
       - file: Introduction.md # ref_graph: {'ignore':True}
       # - file: GoC.md # ref_graph: {'ignore':True}
   - caption: Main content
