@@ -87,7 +87,6 @@ def convert_github_alerts(app, docname, source):
                 # create replacement admonition block depending on original source type (.md, .ipynb or .rst)
                 if source_file.endswith('.md'):
                     replacement = f"\n{quotes}{{{EXTENDED_TYPES[type_match]}}}\n{stripped_block}\n{quotes}\n"
-                    replaced = True
                 elif source_file.endswith('.ipynb'):
                     # make sure to add the necessary quotes and commas for ipynb format
                     if stripped_block[-1] == '"':
