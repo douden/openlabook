@@ -98,7 +98,8 @@ def convert_github_alerts(app, docname, source):
                 elif source_file.endswith('.rst'):
                     replacement = f"\n.. {EXTENDED_TYPES[type_match]}:: \n\n"
                     # indent each line of stripped_block by set number of leading spaces
-                    indented_block = '\n'.join([f"{" "*(app.env.config.sphinx_github_alerts_leading_spaces)}" + line for line in stripped_block.splitlines()])
+                    indent = " " * app.env.config.sphinx_github_alerts_leading_spaces
+                    indented_block = '\n'.join([indent + line for line in stripped_block.splitlines()])
                     replacement += f"{indented_block}\n"
                 # store the new block
                 if replacement:
